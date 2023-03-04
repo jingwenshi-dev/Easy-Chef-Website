@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap');
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    width:100%;
+    height: 100%;
+    padding-top: 5em;
+}
+
+/* navbar part */
+.navbar {
+    height: 5em;
+}
+
+#shoppinglist {
+    margin-left: 1em;
+    margin-right: 1em;
+}
+/* end navbar part */
+
+/* main part */
+h2 {
+    margin-top: 10px;
+    margin-bottom: 25px;
+}
+
+#parts {
+    border-top: 2px solid #dee2e6;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    background-color: #f8f9fa;
+}
+#card2 {
+    text-align: center;
+    height: 100%;
+}
+
+.col-4, .col-6 {
+    margin-top: 1em;
+}

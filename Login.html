@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/solid.css">
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="Login.css" />
+    <title>Log In</title>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
+    <!-- nav bar-->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand">
+                <img src="brand.png" alt="Bootstrap" width="80" height="80">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                    <li class="nav-item">
+                        <a class="nav-link active" href="SocialMedia.html">Home</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">My Recipe</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" href="PostRecipes.html">Add Recipe</a>
+                    </li>
+                </ul>
+
+                <!-- user Info for nav bar (not finish)-->
+
+                <!-- end user Info for nav bar-->
+
+                <!-- shopping list for nav bar -->
+
+                <!-- end shopping list-->
+            </div>
+        </div>
+    </nav>
+    <!-- end of nav bar-->
+
+    <div class="container-fluid">
+        <div class="row align-items-center g-0">
+            <div class="col">
+                <form class="form-horizontal" action="">
+                    <h2>Log in to your account</h2>
+                    <h3>Welcome Back!</h3>
+                    <div class="form-row">
+                        <input type="email" class="form-control" name="Email" id="Email" placeholder="&#xf0e0;   your.name@email.com" style="font-family: 'Open Sans', 'Font Awesome 5 Free'" required>
+                    </div>
+                    <div class="form-row">
+                        <input type="password" class="form-control" name="Password1" id="Password1" placeholder="&#xf023;   Enter your password" style="font-family: 'Open Sans', 'Font Awesome 5 Free'" required>
+                    </div>
+
+                    <p id="login">Not registered yet? <a class="link" href="Signup.html">Sign up</a></p>
+                    <div class="form-row">
+                        <button type="submit" class="Button">LOG IN</button>
+                    </div>
+                    <p id="agreement">By continuing, you agree to accept our <a class="link" href="">Privacy Police</a> & <a class="link" href="">Terms of Services</a>.</p>
+                </form>
+            </div>
+            <div class="col" style="height: 100vh; width: 100%; background-size: cover; background-position: center; background-image: url('https://img.delicious.com.au/EEJ2ozkv/del/2020/10/green-tea-noodles-with-sticky-sweet-chilli-salmon-140868-2.jpg');">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
