@@ -20,7 +20,7 @@ from django.urls import path
 from accounts.views import SignUpView
 
 urlpatterns = [
-    path('signup/', SignUpView.as_view()),
+    path('signup/', SignUpView.as_view())
     # path('login/', None),
     # path('<int:uid>/profile/details/', None),
     # path('<int:uid>/profile/edit/', None)
