@@ -11,15 +11,17 @@ class RegisterSerializer(serializers.ModelSerializer):
         validators=[UniqueValidator(queryset=User.objects.all())]
     )
 
+    email = serializers.EmailField(
+        required=True,
+        validators=[UniqueValidator(queryset=User.objects.all())]
+    )
+
     password = serializers.CharField(min_length=8, write_only=True, required=True, validators=[validate_password])
     password2 = serializers.CharField(min_length=8, write_only=True, required=True)
 
     class Meta:
         model = User
         fields = ['username', 'email', 'password', 'password2']
-        extra_kwargs = {
-            'email': {'required': True}
-        }
 
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
