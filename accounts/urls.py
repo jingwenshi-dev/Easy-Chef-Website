@@ -17,11 +17,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
-from accounts.views import None
+from accounts.views import SignUpView
 
 urlpatterns = [
-    path('signup/', None),
-    path('login/', None),
-    path('<int:uid>/profile/details/', None),
-    path('<int:uid>/profile/edit/', None)
+    path('signup/', SignUpView.as_view()),
+    # path('login/', None),
+    # path('<int:uid>/profile/details/', None),
+    # path('<int:uid>/profile/edit/', None)
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
