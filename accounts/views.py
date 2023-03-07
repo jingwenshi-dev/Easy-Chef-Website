@@ -10,6 +10,3 @@ from accounts.serializers import RegisterSerializer
 class SignUpView(CreateAPIView):
     queryset = User.objects.all()  # Declare the set of objects to operate on
     serializer_class = RegisterSerializer
-
-# class LogInView():
-#     pass
