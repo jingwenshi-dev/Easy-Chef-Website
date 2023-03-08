@@ -18,14 +18,14 @@ class Recipe(models.Model):
 
 
 class Step(models.Model):
-    recipe = models.ForeignKey(to=Recipe, on_delete=models.CASCADE, related_name='steps', default=None,
-                               blank=False)
+    recipe = models.ForeignKey(to=Recipe, on_delete=models.CASCADE, related_name='steps', default=None, blank=False)
     description = models.TextField(blank=False)
     picture = models.ImageField(upload_to='recipes/')
 
 
 class Ingredient(models.Model):
-    recipe = models.ForeignKey(to=Recipe, on_delete=models.CASCADE, related_name='ingredients', default=None, null=False, blank=False)
+    recipe = models.ForeignKey(to=Recipe, on_delete=models.CASCADE, related_name='ingredients', default=None,
+                               null=False, blank=False)
     item = models.CharField(max_length=100, blank=False)
     amount = models.CharField(max_length=4, blank=False)
     unit = models.CharField(max_length=10, blank=False)
