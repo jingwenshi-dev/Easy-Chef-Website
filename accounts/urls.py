@@ -23,7 +23,7 @@ from accounts.views import SignUpView
 
 urlpatterns = [
     path('signup/', SignUpView.as_view()),
-    path('login/', TokenObtainPairView.as_view()),
+    path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     # path('<int:uid>/profile/details/', None),
     # path('<int:uid>/profile/edit/', None)
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

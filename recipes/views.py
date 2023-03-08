@@ -7,7 +7,7 @@ from recipes.serializers import CreateRecipeSerializer
 
 # Create your views here.
 class CreateRecipeView(CreateAPIView):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     serializer_class = CreateRecipeSerializer
 
 
