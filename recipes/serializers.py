@@ -6,7 +6,6 @@ from recipes.models import Recipe, Ingredient, Step
 
 
 class IngredientSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Ingredient
         fields = ['item', 'amount', 'unit']
@@ -19,13 +18,12 @@ class IngredientSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         rid = self.context['view'].kwargs.get('rid')
         recipe = get_object_or_404(Recipe, pk=rid)
-        ingredient = Ingredient.objects.create(recipe=recipe, item="item", amount="amount", unit="unit")
+        ingredient = Ingredient.objects.create(recipe=recipe, item=validated_data["item"], amount=["amount"],
+                                               unit=["unit"])
         return ingredient
 
 
 class StepSerializer(serializers.ModelSerializer):
-    # recipe = serializers.PrimaryKeyRelatedField(queryset=Recipe.objects.all())
-
     class Meta:
         model = Step
         fields = ['number', 'description', 'picture']
@@ -38,15 +36,17 @@ class StepSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         rid = self.context['view'].kwargs.get('rid')
         recipe = get_object_or_404(Recipe, pk=rid)
-        step = Step.objects.create(recipe=recipe, description="description", picture="picture")
+        step = Step.objects.create(recipe=recipe, number=validated_data["number"],
+                                   description=validated_data["description"], picture=validated_data["picture"])
         return step
 
 
 class RecipeSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Recipe
-        fields = ['title', 'description', 'picture', 'time', 'time_unit', 'cuisine', 'diet']
+        fields = ['id', 'title', 'description', 'picture', 'time', 'time_unit', 'cuisine', 'diet']
         extra_kwargs = {
             'uid': {'required': True},
             'title': {'required': True, 'max_length': 100},
@@ -65,5 +65,4 @@ class RecipeSerializer(serializers.ModelSerializer):
                                        picture=validated_data['picture'], time=validated_data['time'],
                                        time_unit=validated_data['time_unit'], cuisine=validated_data['cuisine'],
                                        diet=validated_data['diet'])
-
         return recipe
