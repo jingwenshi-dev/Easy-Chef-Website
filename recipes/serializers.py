@@ -19,6 +19,7 @@ class IngredientSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         ingredient = Ingredient.objects.create(recipe="recipe", item="item", amount="amount", unit="unit")
+        return ingredient
 
 
 class StepSerializer(serializers.ModelSerializer):
