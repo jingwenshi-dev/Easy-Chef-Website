@@ -16,9 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from recipes.views import CreateRecipeView, RecipeView
+from recipes.views import CreateRecipeView, RecipeDetailView, CreateStepView, CreateIngredientView
 
 urlpatterns = [
-    path('<int:uid>/create', CreateRecipeView.as_view()),
-    path('<rid>/details/', RecipeView.as_view()),
+    path('create-recipe/', CreateRecipeView.as_view()),
+    path('create-step/', CreateStepView.as_view()),
+    path('create-ingredient/', CreateIngredientView.as_view()),
+    path('<int:rid>/details/', RecipeDetailView.as_view()),
 ]

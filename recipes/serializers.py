@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from accounts.models import User
 from recipes.models import Recipe, Ingredient, Step
 
 
@@ -16,6 +17,9 @@ class IngredientSerializer(serializers.ModelSerializer):
             'unit': {'required': True}
         }
 
+    def create(self, validated_data):
+        ingredient = Ingredient.objects.create(recipe="recipe", item="item", amount="amount", unit="unit")
+
 
 class StepSerializer(serializers.ModelSerializer):
     recipe = serializers.PrimaryKeyRelatedField(queryset=Recipe.objects.all())
@@ -29,20 +33,21 @@ class StepSerializer(serializers.ModelSerializer):
             'picture': {'required': True}
         }
 
+    def create(self, validated_data):
+        step = Step.objects.create(recipe="recipe", description="description", picture="picture")
+        return step
 
-class CreateRecipeSerializer(serializers.ModelSerializer):
-    ingredients = IngredientSerializer(many=True)
-    steps = StepSerializer(many=True)
+
+class RecipeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Recipe
-        fields = ['title', 'description', 'picture', 'ingredients', 'steps', 'time', 'time_unit', 'cuisine', 'diet']
+        fields = ['title', 'description', 'picture', 'time', 'time_unit', 'cuisine', 'diet']
         extra_kwargs = {
+            'uid': {'required': True},
             'title': {'required': True, 'max_length': 100},
             'description': {'required': True, 'max_length': 500},
             'picture': {'required': True},
-            'ingredients': {'required': True},
-            'steps': {'required': True},
             'time': {'required': True, 'max_length': 4},
             'time_unit': {'required': True, 'max_length': 5},
             'cuisine': {'required': True, 'max_length': 15},
@@ -50,20 +55,11 @@ class CreateRecipeSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-        steps = validated_data.pop("steps")
-        ingredients = validated_data.pop("ingredients")
-
-        user = self.context['request'].user
-        recipe = Recipe.objects.create(user=user, title=validated_data['title'],
+        current_user = self.context['request'].user
+        recipe = Recipe.objects.create(user=current_user, title=validated_data['title'],
                                        description=validated_data['description'],
                                        picture=validated_data['picture'], time=validated_data['time'],
                                        time_unit=validated_data['time_unit'], cuisine=validated_data['cuisine'],
                                        diet=validated_data['diet'])
-
-        for step in steps:
-            Step.objects.create(recipe=recipe, **step)
-
-        for ingredient in ingredients:
-            Ingredient.objects.create(recipe=recipe, **ingredient)
 
         return recipe
