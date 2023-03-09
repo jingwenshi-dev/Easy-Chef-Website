@@ -19,6 +19,7 @@ class Recipe(models.Model):
 
 class Step(models.Model):
     recipe = models.ForeignKey(to=Recipe, on_delete=models.CASCADE, related_name='steps', default=None, blank=False)
+    number = models.IntegerField(blank=False)
     description = models.TextField(blank=False)
     picture = models.ImageField(upload_to='recipes/')
 

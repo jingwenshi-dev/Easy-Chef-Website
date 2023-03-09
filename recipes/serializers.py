@@ -28,8 +28,9 @@ class StepSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Step
-        fields = ['description', 'picture']
+        fields = ['number', 'description', 'picture']
         extra_kwargs = {
+            'number': {'required': True},
             'description': {'required': True},
             'picture': {'required': True}
         }
