@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 
 from accounts.models import User
@@ -5,37 +6,38 @@ from recipes.models import Recipe, Ingredient, Step
 
 
 class IngredientSerializer(serializers.ModelSerializer):
-    recipe = serializers.PrimaryKeyRelatedField(queryset=Recipe.objects.all())
 
     class Meta:
         model = Ingredient
-        fields = ['recipe', 'item', 'amount', 'unit']
+        fields = ['item', 'amount', 'unit']
         extra_kwargs = {
-            'recipe': {'required': True},
             'item': {'required': True},
             'amount': {'required': True},
             'unit': {'required': True}
         }
 
     def create(self, validated_data):
-        ingredient = Ingredient.objects.create(recipe="recipe", item="item", amount="amount", unit="unit")
+        rid = self.context['view'].kwargs.get('rid')
+        recipe = get_object_or_404(Recipe, pk=rid)
+        ingredient = Ingredient.objects.create(recipe=recipe, item="item", amount="amount", unit="unit")
         return ingredient
 
 
 class StepSerializer(serializers.ModelSerializer):
-    recipe = serializers.PrimaryKeyRelatedField(queryset=Recipe.objects.all())
+    # recipe = serializers.PrimaryKeyRelatedField(queryset=Recipe.objects.all())
 
     class Meta:
         model = Step
-        fields = ['recipe', 'description', 'picture']
+        fields = ['description', 'picture']
         extra_kwargs = {
-            'recipe': {'required': True},
             'description': {'required': True},
             'picture': {'required': True}
         }
 
     def create(self, validated_data):
-        step = Step.objects.create(recipe="recipe", description="description", picture="picture")
+        rid = self.context['view'].kwargs.get('rid')
+        recipe = get_object_or_404(Recipe, pk=rid)
+        step = Step.objects.create(recipe=recipe, description="description", picture="picture")
         return step
 
 

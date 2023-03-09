@@ -20,7 +20,7 @@ from recipes.views import CreateRecipeView, RecipeDetailView, CreateStepView, Cr
 
 urlpatterns = [
     path('create-recipe/', CreateRecipeView.as_view()),
-    path('create-step/', CreateStepView.as_view()),
-    path('create-ingredient/', CreateIngredientView.as_view()),
+    path('<int:rid>/create-step/', CreateStepView.as_view()),
+    path('<int:rid>/create-ingredient/', CreateIngredientView.as_view()),
     path('<int:rid>/details/', RecipeDetailView.as_view())
 ]
