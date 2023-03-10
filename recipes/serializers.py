@@ -15,13 +15,6 @@ class IngredientSerializer(serializers.ModelSerializer):
             'name': {'required': True}
         }
 
-    def create(self, validated_data):
-        name = validated_data['name']
-
-        ingredient, created = Ingredient.objects.update_or_create(name=name)
-
-        return ingredient
-
 
 class RecipeIngredientSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)

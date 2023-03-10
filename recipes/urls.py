@@ -15,12 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from recipes.views import CreateRecipeView, RecipeDetailView, CreateStepView, GetOrCreateIngredientView, CreateOrUpdateIngredientView
+from recipes.views import CreateRecipeView, RecipeDetailView, CreateStepView, CreateIngredientView, CreateRecipeIngredientView
 
 urlpatterns = [
     path('create-recipe/', CreateRecipeView.as_view()),
     path('<int:rid>/create-step/', CreateStepView.as_view()),
-    path('<int:rid>/get-create-ingredient/', GetOrCreateIngredientView.as_view()),
-    path('<int:rid>/<int:iid>/create-update-recipe-ingredient/', CreateOrUpdateIngredientView.as_view()),
+    path('<int:rid>/create-ingredient/', CreateIngredientView.as_view()),
+    path('<int:rid>/<int:iid>/create-recipe-ingredient/', CreateRecipeIngredientView.as_view()),
     path('<int:rid>/details/', RecipeDetailView.as_view())
 ]

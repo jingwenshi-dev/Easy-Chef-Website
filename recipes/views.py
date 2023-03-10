@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from rest_framework.exceptions import PermissionDenied
-from rest_framework.generics import CreateAPIView, RetrieveAPIView, ListAPIView, ListCreateAPIView
+from rest_framework.generics import CreateAPIView, RetrieveAPIView, ListAPIView, ListCreateAPIView, UpdateAPIView
 from rest_framework.permissions import IsAuthenticated, BasePermission
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -20,7 +20,6 @@ class CreateRecipeView(CreateAPIView):
 class CreateStepView(CreateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = StepSerializer
-
 
 #
 # class GetCreateUpdateIngredientView(APIView):
@@ -68,17 +67,12 @@ class CreateStepView(CreateAPIView):
 #         return JsonResponse({"items": lst})
 
 
-class GetOrCreateIngredientView(CreateAPIView):
+class CreateIngredientView(CreateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = IngredientSerializer
 
-    def perform_create(self, serializer):
-        instance = serializer.save()
-        serialized_data = self.serializer_class(instance).data
-        return Response(serialized_data, status=201)
 
-
-class CreateOrUpdateIngredientView(CreateAPIView):
+class CreateRecipeIngredientView(UpdateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = RecipeIngredientSerializer
 
