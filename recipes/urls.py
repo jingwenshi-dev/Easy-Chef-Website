@@ -22,7 +22,7 @@ urlpatterns = [
     path('<int:rid>/create-step/', CreateStepView.as_view()),
     path('<int:rid>/create-ingredient/', CreateIngredientView.as_view()),
     path('<int:rid>/<int:iid>/create-recipe-ingredient/', CreateRecipeIngredientView.as_view()),
-    path('<int:riid>/get-update-destory-recipe-ingredient', GetUpdateDestroyRecipeIngredientView.as_view()),
+    path('<int:riid>/<int:rid>/<int:iid>/get-update-destory-recipe-ingredient', GetUpdateDestroyRecipeIngredientView.as_view()),
     path('<int:sid>/get-update-destory-step', GetUpdateDestroyStepView.as_view()),
     path('<int:rid>/details/', RecipeDetailView.as_view())
 ]

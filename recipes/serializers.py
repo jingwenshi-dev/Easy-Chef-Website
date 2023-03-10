@@ -43,8 +43,20 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
         return recipe_ingredient
 
     def update(self, instance, validated_data):
-        pass
-        # TODO
+        rid = self.context['view'].kwargs.get('rid')
+        iid = self.context['view'].kwargs.get('iid')
+
+        recipe = get_object_or_404(Recipe, pk=rid)
+        ingredient = get_object_or_404(Ingredient, pk=iid)
+
+        instance.recipe = recipe
+        instance.ingredient = ingredient
+        instance.amount = validated_data["amount"]
+        instance.unit = validated_data["unit"]
+
+        instance.save()
+
+        return instance
 
 
 class StepSerializer(serializers.ModelSerializer):
