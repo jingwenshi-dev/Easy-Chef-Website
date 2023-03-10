@@ -1,10 +1,9 @@
 from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404
-from rest_framework.exceptions import PermissionDenied
-from rest_framework.generics import CreateAPIView, UpdateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.permissions import IsAuthenticated, BasePermission
+from django.shortcuts import get_object_or_404
+from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
-from rest_framework.response import Response
+from rest_framework.exceptions import NotFound
 
 from accounts.models import User
 from recipes.models import Recipe, Step, Ingredient, RecipeIngredient
@@ -83,8 +82,21 @@ class GetUpdateDestroyRecipeIngredientView(RetrieveUpdateDestroyAPIView):
     serializer_class = RecipeIngredientSerializer
 
     def get_object(self):
-        riid = self.kwargs.get("riid", "")
-        return get_object_or_404(RecipeIngredient, pk=riid)
+        rid = self.kwargs.get("rid", "")
+        iid = self.kwargs.get("iid", "")
+
+        recipe = get_object_or_404(Recipe, pk=rid)
+        ingredient = get_object_or_404(Ingredient, pk=iid)
+
+        recipe_ingredient = RecipeIngredient.objects.filter(recipe=recipe, ingredient=ingredient)
+
+        if not recipe_ingredient.exists():
+            raise NotFound(detail="The given combination of recipe and ingredient does not exist (Hint: Creat a new "
+                                  "combination).")
+
+        recipe_ingredient = recipe_ingredient[0]
+
+        return recipe_ingredient
 
 
 class GetUpdateDestroyStepView(RetrieveUpdateDestroyAPIView):
