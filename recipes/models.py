@@ -25,7 +25,7 @@ class Step(models.Model):
 
 
 class Ingredient(models.Model):
-    item = models.CharField(max_length=100, blank=False, unique=True)
+    name = models.CharField(max_length=100, blank=False, unique=True)
 
 
 class RecipeIngredient(models.Model):

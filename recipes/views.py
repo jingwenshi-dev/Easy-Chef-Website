@@ -22,7 +22,7 @@ class CreateStepView(CreateAPIView):
     serializer_class = StepSerializer
 
 
-class GetOrCreateIngredientView(CreateAPIView):
+class GetCreateUpdateIngredientView(CreateAPIView):
     """
     Get the list of ingredient with all corresponding fields and ID.
     If any ingredient DNE, create one it first.
@@ -33,6 +33,7 @@ class GetOrCreateIngredientView(CreateAPIView):
         lst = []
 
         for item in items:
+
             ingredient, created = Ingredient.objects.get_or_create(item=item.get('item', ''))
 
             pk = ingredient.pk
