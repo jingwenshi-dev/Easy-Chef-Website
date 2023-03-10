@@ -33,7 +33,7 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
         iid = self.context['view'].kwargs.get('iid')
 
         recipe = get_object_or_404(Recipe, pk=rid)
-        ingredient = get_object_or_404(Recipe, pk=iid)
+        ingredient = get_object_or_404(Ingredient, pk=iid)
 
         amount = validated_data['amount']
         unit = validated_data['unit']
