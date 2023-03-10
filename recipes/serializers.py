@@ -37,19 +37,20 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
         amount = validated_data['amount']
         unit = validated_data['unit']
 
+        if RecipeIngredient.objects.filter(recipe=recipe, ingredient=ingredient).exists():
+            raise serializers.ValidationError({"detail": "Current combination of recipe and ingredient already exist ("
+                                                         "Hint: Update or Destroy current object)."})
+
         recipe_ingredient, created = RecipeIngredient.objects.update_or_create(recipe=recipe, ingredient=ingredient,
                                                                                amount=amount, unit=unit)
 
         return recipe_ingredient
 
     def update(self, instance, validated_data):
-        rid = self.context['view'].kwargs.get('rid')
         iid = self.context['view'].kwargs.get('iid')
 
-        recipe = get_object_or_404(Recipe, pk=rid)
         ingredient = get_object_or_404(Ingredient, pk=iid)
 
-        instance.recipe = recipe
         instance.ingredient = ingredient
         instance.amount = validated_data["amount"]
         instance.unit = validated_data["unit"]
