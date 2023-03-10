@@ -73,15 +73,22 @@ class CreateIngredientView(CreateAPIView):
 
 
 class CreateRecipeIngredientView(CreateAPIView):
+    """
+    Create a unique combination of recipe and ingredient with a given amount and unit
+    """
     permission_classes = [IsAuthenticated]
     serializer_class = RecipeIngredientSerializer
 
 
 class GetUpdateDestroyRecipeIngredientView(RetrieveUpdateDestroyAPIView):
+
     permission_classes = [IsAuthenticated]
     serializer_class = RecipeIngredientSerializer
 
     def get_object(self):
+        """
+        @return: A RecipeIngredient object based on the endpoint recipe and ingredient id.
+        """
         rid = self.kwargs.get("rid", "")
         iid = self.kwargs.get("iid", "")
 
@@ -107,6 +114,8 @@ class GetUpdateDestroyStepView(RetrieveUpdateDestroyAPIView):
 
 class RecipeDetailView(APIView):
     def get(self, request, rid):
+        # TODO
+
         recipe = get_object_or_404(Recipe, id=rid)
         step = Step.objects.filter(recipe=recipe)
         ingredient = Ingredient.objects.filter(recipe=recipe)

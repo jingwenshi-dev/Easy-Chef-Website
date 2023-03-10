@@ -28,6 +28,11 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
+        """
+        @param iid: Ingredient object id
+        @param rid: Recipe object id
+        @return: A RecipeIngredient object with passed in rid and iid
+        """
         rid = self.context['view'].kwargs.get('rid')
         iid = self.context['view'].kwargs.get('iid')
 
@@ -47,6 +52,12 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
         return recipe_ingredient
 
     def update(self, instance, validated_data):
+        """
+        Update all fields (i.e. ingredient, amount, unit) in RecipeIngredient except for rid since this is an entity
+        set combined to a certain recipe.
+        @param instance: RecipeIngredient object returned by get_object(self) from outer scope.
+        @return: Updated RecipeIngredient instance
+        """
         iid = self.context['view'].kwargs.get('iid')
 
         ingredient = get_object_or_404(Ingredient, pk=iid)
