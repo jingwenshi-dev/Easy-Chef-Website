@@ -28,7 +28,6 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-
         rid = self.context['view'].kwargs.get('rid')
         iid = self.context['view'].kwargs.get('iid')
 
@@ -38,9 +37,14 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
         amount = validated_data['amount']
         unit = validated_data['unit']
 
-        recipe_ingredient, created = RecipeIngredient.objects.update_or_create(recipe=recipe, ingredient=ingredient, amount=amount, unit=unit)
+        recipe_ingredient, created = RecipeIngredient.objects.update_or_create(recipe=recipe, ingredient=ingredient,
+                                                                               amount=amount, unit=unit)
 
         return recipe_ingredient
+
+    def update(self, instance, validated_data):
+        pass
+        # TODO
 
 
 class StepSerializer(serializers.ModelSerializer):
@@ -59,6 +63,10 @@ class StepSerializer(serializers.ModelSerializer):
         step = Step.objects.create(recipe=recipe, number=validated_data["number"],
                                    description=validated_data["description"], picture=validated_data["picture"])
         return step
+
+    def update(self, instance, validated_data):
+        pass
+        # TODO
 
 
 class RecipeSerializer(serializers.ModelSerializer):

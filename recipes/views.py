@@ -79,12 +79,15 @@ class CreateRecipeIngredientView(CreateAPIView):
 
 
 class GetUpdateDestroyRecipeIngredientView(RetrieveUpdateDestroyAPIView):
-    pass
+    permission_classes = [IsAuthenticated]
+    serializer_class = RecipeIngredientSerializer
+    # TODO
 
 
 class GetUpdateDestroyStepView(RetrieveUpdateDestroyAPIView):
-    pass
-
+    permission_classes = [IsAuthenticated]
+    serializer_class = StepSerializer
+    # TODO
 
 class RecipeDetailView(APIView):
     def get(self, request, rid):
