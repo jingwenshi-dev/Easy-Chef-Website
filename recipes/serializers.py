@@ -2,22 +2,52 @@ from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 
 from accounts.models import User
-from recipes.models import Recipe, Ingredient, Step
+from recipes.models import Recipe, Ingredient, Step, RecipeIngredient
 
 
-# class IngredientSerializer(serializers.ModelSerializer):
-#     id = serializers.IntegerField(read_only=True)
-#
-#     class Meta:
-#         model = Ingredient
-#         fields = ['id', 'item']
-#         extra_kwargs = {
-#             'item': {'required': True}
-#         }
-#
-#     def create(self, validated_data):
-#         ingredient, created = Ingredient.objects.get_or_create(item=validated_data['item'])
-#         return ingredient
+class IngredientSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = Ingredient
+        fields = ['id', 'name']
+        extra_kwargs = {
+            'name': {'required': True}
+        }
+
+    def create(self, validated_data):
+        name = validated_data['name']
+
+        ingredient, created = Ingredient.objects.update_or_create(name=name)
+
+        return ingredient
+
+
+class RecipeIngredientSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = RecipeIngredient
+        fields = ['id', 'amount', 'unit']
+        extra_kwargs = {
+            'amount': {'required': True},
+            'unit': {'required': True}
+        }
+
+    def create(self, validated_data):
+
+        rid = self.context['view'].kwargs.get('rid')
+        iid = self.context['view'].kwargs.get('iid')
+
+        recipe = get_object_or_404(Recipe, pk=rid)
+        ingredient = get_object_or_404(Recipe, pk=iid)
+
+        amount = validated_data['amount']
+        unit = validated_data['unit']
+
+        recipe_ingredient, created = RecipeIngredient.objects.update_or_create(recipe=recipe, ingredient=ingredient, amount=amount, unit=unit)
+
+        return recipe_ingredient
 
 
 class StepSerializer(serializers.ModelSerializer):

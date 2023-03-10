@@ -7,8 +7,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from accounts.models import User
-from recipes.models import Recipe, Step, Ingredient
-from recipes.serializers import RecipeSerializer, StepSerializer
+from recipes.models import Recipe, Step, Ingredient, RecipeIngredient
+from recipes.serializers import RecipeSerializer, StepSerializer, IngredientSerializer, RecipeIngredientSerializer
 
 
 # Create your views here.
@@ -22,26 +22,65 @@ class CreateStepView(CreateAPIView):
     serializer_class = StepSerializer
 
 
-class GetCreateUpdateIngredientView(CreateAPIView):
-    """
-    Get the list of ingredient with all corresponding fields and ID.
-    If any ingredient DNE, create one it first.
-    """
-    def post(self, request, *args, **kwargs):
-        items = request.data.get('items', [])
+#
+# class GetCreateUpdateIngredientView(APIView):
+#     """
+#     Get the list of ingredient with all corresponding fields and ID.
+#     If any ingredient DNE, create one it first.
+#     """
+#
+#     def post(self, request, *args, **kwargs):
+#
+#         # Get current recipe
+#         rid = self.kwargs.get("rid")
+#         recipe = get_object_or_404(Recipe, rid)
+#
+#         # Get list of input ingredient in JSON
+#         items = request.data.get('items', [])
+#
+#         lst = []
+#
+#         for item in items:
+#
+#             field_empty_err = []
+#
+#             name = item.get('name', '')
+#             amount = item.get('amount', '')
+#             unit = item.get('unit', '')
+#
+#             if name == '':
+#                 errors = {"item": field_empty_err}
+#
+#         for item in items:
+#             name = item.get('name', '')
+#             amount = item.get('amount', '')
+#             unit = item.get('unit', '')
+#
+#             # Get the ingredient, or create the ingredient if DNE
+#             ingredient, created = Ingredient.objects.get_or_create(name=name)
+#
+#             # Link ingredient with recipe, or create that relation if DNE
+#             recipe_ingredient, created = RecipeIngredient.objects.update_or_create(recipe=recipe, ingredient=ingredient,
+#                                                                                    amount=amount, unit=unit)
+#
+#             lst.append({"id": pk, "name": name})
+#
+#         return JsonResponse({"items": lst})
 
-        lst = []
 
-        for item in items:
+class GetOrCreateIngredientView(CreateAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = IngredientSerializer
 
-            ingredient, created = Ingredient.objects.get_or_create(item=item.get('item', ''))
+    def perform_create(self, serializer):
+        instance = serializer.save()
+        serialized_data = self.serializer_class(instance).data
+        return Response(serialized_data, status=201)
 
-            pk = ingredient.pk
-            item = ingredient.item
 
-            lst.append({"id": pk, "item": item})
-
-        return JsonResponse({"items": lst})
+class CreateOrUpdateIngredientView(CreateAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = RecipeIngredientSerializer
 
 
 class RecipeDetailView(APIView):
