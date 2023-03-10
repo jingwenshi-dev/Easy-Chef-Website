@@ -25,11 +25,7 @@ class Step(models.Model):
 
 
 class Ingredient(models.Model):
-    recipe = models.ForeignKey(to=Recipe, on_delete=models.CASCADE, related_name='ingredients', default=None,
-                               null=False, blank=False)
-    item = models.CharField(max_length=100, blank=False)
-    amount = models.CharField(max_length=4, blank=False)
-    unit = models.CharField(max_length=10, blank=False)
+    item = models.CharField(max_length=100, blank=False, unique=True)
 
 
 class Rating(models.Model):

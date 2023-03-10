@@ -5,22 +5,19 @@ from accounts.models import User
 from recipes.models import Recipe, Ingredient, Step
 
 
-class IngredientSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Ingredient
-        fields = ['item', 'amount', 'unit']
-        extra_kwargs = {
-            'item': {'required': True},
-            'amount': {'required': True},
-            'unit': {'required': True}
-        }
-
-    def create(self, validated_data):
-        rid = self.context['view'].kwargs.get('rid')
-        recipe = get_object_or_404(Recipe, pk=rid)
-        ingredient = Ingredient.objects.create(recipe=recipe, item=validated_data["item"], amount=["amount"],
-                                               unit=["unit"])
-        return ingredient
+# class IngredientSerializer(serializers.ModelSerializer):
+#     id = serializers.IntegerField(read_only=True)
+#
+#     class Meta:
+#         model = Ingredient
+#         fields = ['id', 'item']
+#         extra_kwargs = {
+#             'item': {'required': True}
+#         }
+#
+#     def create(self, validated_data):
+#         ingredient, created = Ingredient.objects.get_or_create(item=validated_data['item'])
+#         return ingredient
 
 
 class StepSerializer(serializers.ModelSerializer):
