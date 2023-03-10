@@ -1,12 +1,8 @@
 from django.http import JsonResponse
-from django.shortcuts import render
-from rest_framework import status
 from rest_framework.generics import CreateAPIView
-from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
-from rest_framework_simplejwt.tokens import RefreshToken
 
 from accounts.models import User
 from accounts.serializers import RegisterSerializer
