@@ -72,7 +72,7 @@ class CreateIngredientView(CreateAPIView):
     serializer_class = IngredientSerializer
 
 
-class CreateRecipeIngredientView(UpdateAPIView):
+class CreateRecipeIngredientView(CreateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = RecipeIngredientSerializer
 
