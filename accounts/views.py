@@ -3,15 +3,14 @@ from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
-
 from accounts.models import User
-from accounts.serializers import RegisterSerializer
+from accounts.serializers import UserSerializer
 
 
 # Create your views here.
 class SignUpView(CreateAPIView):
     queryset = User.objects.all()  # Declare the set of objects to operate on
-    serializer_class = RegisterSerializer
+    serializer_class = UserSerializer
 
 
 class LogOutView(APIView):

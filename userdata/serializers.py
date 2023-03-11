@@ -1,6 +1,15 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import serializers
+from userdata.models import *
+from accounts.serializers import *
 
-from accounts.models import User
-from recipes.models import Recipe
-from userdata.models import Comment, Rating, LikedRecipe, BrowsedRecipe, ShoppingList
+
+class RatingSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+    user = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Rating
+        fields = ['id', 'user', 'recipe', 'score']
+        extra_kwargs = {
+            'score': {'required': True},
+        }

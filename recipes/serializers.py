@@ -1,14 +1,16 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
+from accounts.serializers import UserSerializer
 from recipes.models import *
 
 
 class RecipeSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
+    user = UserSerializer(read_only=True)
 
     class Meta:
         model = Recipe
-        fields = ['id', 'title', 'description', 'picture', 'time', 'time_unit', 'cuisine', 'diet']
+        fields = ['id', 'user', 'title', 'description', 'picture', 'time', 'time_unit', 'cuisine', 'diet']
         extra_kwargs = {
             'uid': {'required': True},
             'title': {'required': True, 'max_length': 100},
@@ -60,11 +62,12 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
     Be able to include all fields' of its FK when return
     """
     id = serializers.IntegerField(read_only=True)
+    recipe = RecipeSerializer(read_only=True)
     ingredient = IngredientSerializer(read_only=True)
 
     class Meta:
         model = RecipeIngredient
-        fields = ['id', 'ingredient', 'amount', 'unit']
+        fields = ['id', 'recipe', 'ingredient', 'amount', 'unit']
         extra_kwargs = {
             'amount': {'required': True},
             'unit': {'required': True}
@@ -115,9 +118,11 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
 
 
 class StepSerializer(serializers.ModelSerializer):
+    recipe = RecipeSerializer(read_only=True)
+
     class Meta:
         model = Step
-        fields = ['number', 'description', 'picture']
+        fields = ['recipe', 'number', 'description', 'picture']
         extra_kwargs = {
             'number': {'required': True},
             'description': {'required': True},
