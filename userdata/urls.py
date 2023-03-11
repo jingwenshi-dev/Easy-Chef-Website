@@ -18,6 +18,8 @@ from django.urls import path
 from userdata.views import *
 
 urlpatterns = [
+    path('create-rating/', CreateRatingView.as_view()),
+    path('rating=<int:rtid>/RU-rating/', RURatingView.as_view())
     # path('create-recipe/', CreateRecipeView.as_view()),
     # path('recipe=<int:rid>/create-step/', CreateStepView.as_view()),
     # path('recipe=<int:rid>/create-ingredient/', CreateIngredientView.as_view()),
