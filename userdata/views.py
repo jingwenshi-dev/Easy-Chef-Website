@@ -1,10 +1,11 @@
-from django.shortcuts import render
 from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView, RetrieveDestroyAPIView, \
     RetrieveUpdateDestroyAPIView
 
-
-# Create your views here.
-
+"""
+API Class Naming Convention:
+For API classes with more than one functionality of CRUD, use letters for shorthand.
+E.g. RUDStepView is responsible for Retrieve, Update and Delete of a Step instance only.
+"""
 
 class CreateRatingView(CreateAPIView):
     # TODO
