@@ -5,6 +5,33 @@ from accounts.models import User
 from recipes.models import Recipe, Ingredient, Step, RecipeIngredient
 
 
+class RecipeSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = Recipe
+        fields = ['id', 'title', 'description', 'picture', 'time', 'time_unit', 'cuisine', 'diet']
+        extra_kwargs = {
+            'uid': {'required': True},
+            'title': {'required': True, 'max_length': 100},
+            'description': {'required': True, 'max_length': 500},
+            'picture': {'required': True},
+            'time': {'required': True, 'max_length': 4},
+            'time_unit': {'required': True, 'max_length': 5},
+            'cuisine': {'required': True, 'max_length': 15},
+            'diet': {'required': True, 'max_length': 30}
+        }
+
+    def create(self, validated_data):
+        current_user = self.context['request'].user
+        recipe = Recipe.objects.create(user=current_user, title=validated_data['title'],
+                                       description=validated_data['description'],
+                                       picture=validated_data['picture'], time=validated_data['time'],
+                                       time_unit=validated_data['time_unit'], cuisine=validated_data['cuisine'],
+                                       diet=validated_data['diet'])
+        return recipe
+
+
 class IngredientSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
 
@@ -18,10 +45,11 @@ class IngredientSerializer(serializers.ModelSerializer):
 
 class RecipeIngredientSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
+    ingredient = IngredientSerializer(read_only=True)
 
     class Meta:
         model = RecipeIngredient
-        fields = ['id', 'amount', 'unit']
+        fields = ['id', 'ingredient', 'amount', 'unit']
         extra_kwargs = {
             'amount': {'required': True},
             'unit': {'required': True}
@@ -96,30 +124,3 @@ class StepSerializer(serializers.ModelSerializer):
         instance.save()
 
         return instance
-
-
-class RecipeSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(read_only=True)
-
-    class Meta:
-        model = Recipe
-        fields = ['id', 'title', 'description', 'picture', 'time', 'time_unit', 'cuisine', 'diet']
-        extra_kwargs = {
-            'uid': {'required': True},
-            'title': {'required': True, 'max_length': 100},
-            'description': {'required': True, 'max_length': 500},
-            'picture': {'required': True},
-            'time': {'required': True, 'max_length': 4},
-            'time_unit': {'required': True, 'max_length': 5},
-            'cuisine': {'required': True, 'max_length': 15},
-            'diet': {'required': True, 'max_length': 30}
-        }
-
-    def create(self, validated_data):
-        current_user = self.context['request'].user
-        recipe = Recipe.objects.create(user=current_user, title=validated_data['title'],
-                                       description=validated_data['description'],
-                                       picture=validated_data['picture'], time=validated_data['time'],
-                                       time_unit=validated_data['time_unit'], cuisine=validated_data['cuisine'],
-                                       diet=validated_data['diet'])
-        return recipe

@@ -117,15 +117,13 @@ class GetUpdateDestroyStepView(RetrieveUpdateDestroyAPIView):
 
 class RecipeDetailView(APIView):
     def get(self, request, rid):
-        # TODO
-
         recipe = get_object_or_404(Recipe, id=rid)
         step = Step.objects.filter(recipe=recipe)
-        ingredient = Ingredient.objects.filter(recipe=recipe)
+        recipe_ingredient = RecipeIngredient.objects.filter(recipe=recipe)
 
         recipe_serializer = RecipeSerializer(recipe)
         step_serializer = StepSerializer(step, many=True)
-        ingredient_serializer = IngredientSerializer(ingredient, many=True)
+        recipe_ingredient_serializer = RecipeIngredientSerializer(recipe_ingredient, many=True)
 
         return JsonResponse(
-            {"recipe": recipe_serializer.data, "step": step_serializer.data, "ingredient": ingredient_serializer.data})
+            {"recipe": recipe_serializer.data, "step": step_serializer.data, "recipe_ingredient": recipe_ingredient_serializer.data})
