@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
-from recipes.models import Recipe, Ingredient, Step, RecipeIngredient
+from recipes.models import *
 
 
 class RecipeSerializer(serializers.ModelSerializer):

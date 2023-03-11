@@ -1,6 +1,7 @@
 from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView, RetrieveDestroyAPIView, \
     RetrieveUpdateDestroyAPIView
-
+from rest_framework.permissions import IsAuthenticated
+from userdata.serializers import *
 """
 API Class Naming Convention:
 For API classes with more than one functionality of CRUD, use letters for shorthand.
@@ -8,8 +9,8 @@ E.g. RUDStepView is responsible for Retrieve, Update and Delete of a Step instan
 """
 
 class CreateRatingView(CreateAPIView):
+    permission_classes = [IsAuthenticated]
     # TODO
-    pass
 
 
 class RURatingView(RetrieveUpdateAPIView):
