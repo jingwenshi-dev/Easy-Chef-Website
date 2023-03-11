@@ -2,6 +2,7 @@ from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView, Retrie
     RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 from userdata.serializers import *
+from userdata.permissions import *
 
 """
 API Class Naming Convention:
@@ -11,7 +12,7 @@ E.g. RUDStepView is responsible for Retrieve, Update and Delete of a Step instan
 
 
 class CreateRatingView(CreateAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, UserDataPermission]
     serializer_class = RatingSerializer
 
 
@@ -19,7 +20,7 @@ class RURatingView(RetrieveUpdateAPIView):
     """
     A rating only need to be updated and must not be deleted
     """
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, UserDataPermission]
     serializer_class = RatingSerializer
 
     def get_object(self):
@@ -29,7 +30,7 @@ class RURatingView(RetrieveUpdateAPIView):
 
 
 class CreateCommentView(CreateAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated,UserDataPermission]
     serializer_class = CommentSerializer
 
 
@@ -37,7 +38,7 @@ class RUDCommentView(RetrieveUpdateDestroyAPIView):
     """
     A comment can be updated, deleted and retrieved
     """
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, UserDataPermission]
     serializer_class = CommentSerializer
 
     def get_object(self):
@@ -47,7 +48,7 @@ class RUDCommentView(RetrieveUpdateDestroyAPIView):
 
 
 class CreateLikedRecipeView(CreateAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, UserDataPermission]
     serializer_class = LikedRecipeSerializer
 
 
@@ -55,7 +56,7 @@ class RDLikedRecipeView(RetrieveDestroyAPIView):
     """
     A liked recipe can only be deleted
     """
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, UserDataPermission]
     serializer_class = LikedRecipeSerializer
 
     def get_object(self):
@@ -65,7 +66,7 @@ class RDLikedRecipeView(RetrieveDestroyAPIView):
 
 
 class CreateBrowsedRecipeView(CreateAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, UserDataPermission]
     serializer_class = BrowsedRecipeSerializer
 
 
@@ -74,7 +75,7 @@ class RDBrowsedRecipeView(RetrieveDestroyAPIView):
     """
     A Browsed Recipe history can be deleted only
     """
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, UserDataPermission]
     serializer_class = BrowsedRecipeSerializer
 
     def get_object(self):
@@ -84,7 +85,7 @@ class RDBrowsedRecipeView(RetrieveDestroyAPIView):
 
 
 class CreateShoppingListView(CreateAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, UserDataPermission]
     serializer_class = ShoppingListSerializer
 
 
@@ -92,7 +93,7 @@ class RDShoppingListView(RetrieveDestroyAPIView):
     """
     A shopping lst can be retrieved, updated, and deleted
     """
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, UserDataPermission]
     serializer_class = ShoppingListSerializer
 
     def get_object(self):

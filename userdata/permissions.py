@@ -9,6 +9,7 @@ class UserDataPermission(BasePermission):
         rtid = view.kwargs.get('rtid')
         cid = view.kwargs.get('cid')
         lrid = view.kwargs.get('lrid')
+        spid = view.kwargs.get('spid')
 
         if rtid:
             rating = get_object_or_404(Rating, pk=rtid)
@@ -21,3 +22,9 @@ class UserDataPermission(BasePermission):
         elif lrid:
             liked_recipe = get_object_or_404(LikedRecipe, pk=lrid)
             return liked_recipe.user == request.user
+
+        elif spid:
+            shopping_lst = get_object_or_404(ShoppingList, pk=spid)
+            return shopping_lst.user == request.user
+
+        return True
