@@ -70,7 +70,7 @@ class CreateBrowsedRecipeView(CreateAPIView):
 
 
 # Not sure if this class is needed
-class DeleteBrowsedRecipeView(RetrieveDestroyAPIView):
+class RDBrowsedRecipeView(RetrieveDestroyAPIView):
     """
     A Browsed Recipe history can be deleted only
     """
@@ -78,8 +78,8 @@ class DeleteBrowsedRecipeView(RetrieveDestroyAPIView):
     serializer_class = BrowsedRecipeSerializer
 
     def get_object(self):
-        rid = self.kwargs.get('rid')
-        browsed_recipe = get_object_or_404(BrowsedRecipe, pk=rid)
+        brid = self.kwargs.get('brid')
+        browsed_recipe = get_object_or_404(BrowsedRecipe, pk=brid)
         return browsed_recipe
 
 
