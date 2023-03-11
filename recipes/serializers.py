@@ -31,6 +31,10 @@ class RecipeSerializer(serializers.ModelSerializer):
                                        diet=validated_data['diet'])
         return recipe
 
+    def update(self, instance, validated_data):
+        # TODO
+        pass
+
 
 class IngredientSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)

@@ -115,6 +115,12 @@ class GetUpdateDestroyStepView(RetrieveUpdateDestroyAPIView):
         return step
 
 
+class RecipeEditView(RetrieveUpdateDestroyAPIView):
+    # TODO
+    def get_object(self):
+        # TODO
+
+
 class RecipeDetailView(APIView):
     def get(self, request, rid):
         recipe = get_object_or_404(Recipe, id=rid)
