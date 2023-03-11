@@ -84,13 +84,18 @@ class DeleteBrowsedRecipeView(RetrieveDestroyAPIView):
 
 
 class CreateShoppingListView(CreateAPIView):
-    # TODO
-    pass
+    permission_classes = [IsAuthenticated]
+    serializer_class = ShoppingListSerializer
 
 
 class RUDShoppingListView(RetrieveUpdateDestroyAPIView):
     """
     A shopping lst can be retrieved, updated, and deleted
     """
-    # TODO
-    pass
+    permission_classes = [IsAuthenticated]
+    serializer_class = ShoppingListSerializer
+
+    def get_object(self):
+        spid = self.kwargs.get('spid')
+        shopping_lst = get_object_or_404(ShoppingList, pk=spid)
+        return shopping_lst

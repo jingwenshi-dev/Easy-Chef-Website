@@ -98,3 +98,23 @@ class BrowsedRecipeSerializer(serializers.ModelSerializer):
         browsed_recipe = BrowsedRecipe.objects.create(user=current_user, recipe=recipe)
 
         return browsed_recipe
+
+
+class ShoppingListSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+    user = UserSerializer(read_only=True)
+    recipe = RecipeSerializer(read_only=True)
+
+    class Meta:
+        mode = ShoppingList
+        fields = ['id', 'user', 'recipe']
+
+    def create(self, validated_data):
+        rid = self.context['view'].kwargs.get('rid')
+
+        current_user = self.context['request'].user
+        recipe = get_object_or_404(Recipe, pk=rid)
+
+        shopping_lst = ShoppingList.objects.create(user=current_user, recipe=recipe)
+
+        return shopping_lst
