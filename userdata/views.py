@@ -23,27 +23,32 @@ class RURatingView(RetrieveUpdateAPIView):
     serializer_class = RatingSerializer
 
     def get_object(self):
-        rtid = self.kwargs.get("rtid", "")
+        rtid = self.kwargs.get('rtid')
         rating = get_object_or_404(Rating, pk=rtid)
         return rating
 
 
 class CreateCommentView(CreateAPIView):
-    # TODO
-    pass
+    permission_classes = [IsAuthenticated]
+    serializer_class = CommentSerializer
 
 
 class RUDCommentView(RetrieveUpdateDestroyAPIView):
     """
     A comment can be updated, deleted and retrieved
     """
-    # TODO
-    pass
+    permission_classes = [IsAuthenticated]
+    serializer_class = CommentSerializer
+
+    def get_object(self):
+        cid = self.kwargs.get('cid')
+        comment = get_object_or_404(Comment, pk=cid)
+        return comment
 
 
 class CreateLikedRecipeView(CreateAPIView):
-    # TODO
-    pass
+    permission_classes = [IsAuthenticated]
+    serializer_class = pass
 
 
 class RDLikedRecipeView(RetrieveDestroyAPIView):

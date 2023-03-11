@@ -19,13 +19,6 @@ from userdata.views import *
 
 urlpatterns = [
     path('create-rating/', CreateRatingView.as_view()),
-    path('rating=<int:rtid>/RU-rating/', RURatingView.as_view())
-    # path('create-recipe/', CreateRecipeView.as_view()),
-    # path('recipe=<int:rid>/create-step/', CreateStepView.as_view()),
-    # path('recipe=<int:rid>/create-ingredient/', CreateIngredientView.as_view()),
-    # path('recipe=<int:rid>&ingredient=<int:iid>/create-recipe-ingredient/', CreateRecipeIngredientView.as_view()),
-    # path('recipe=<int:rid>&ingredient=<int:iid>/get-update-destory-recipe-ingredient/', GetUpdateDestroyRecipeIngredientView.as_view()),
-    # path('recipe=<int:rid>&step=<int:sid>/get-update-destory-step/', GetUpdateDestroyStepView.as_view()),
-    # path('recipe=<int:rid>/get-update-destory-recipe/', RecipeEditView.as_view()),
-    # path('recipe=<int:rid>/details/', RecipeDetailView.as_view())
+    path('rating=<int:rtid>/RU-rating/', RURatingView.as_view()),
+    path('recipe=<int:rid>/create-comment', CreateCommentView)
 ]
