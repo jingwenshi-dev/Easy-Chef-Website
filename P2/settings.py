@@ -36,9 +36,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts.apps.AccountsConfig',
+    'recipes.apps.RecipesConfig',
+    'userdata.apps.UserdataConfig',
     'rest_framework',
-    'rest_framework_simplejwt.token_blacklist',
-    'recipes.apps.RecipesConfig'
+    'rest_framework_simplejwt.token_blacklist'
 ]
 
 MIDDLEWARE = [
