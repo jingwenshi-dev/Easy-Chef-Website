@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
@@ -26,3 +26,12 @@ class LogOutView(APIView):
             t, _ = BlacklistedToken.objects.get_or_create(token=token)
 
         return JsonResponse({"Logout": True})
+
+
+class EditProfileView(RetrieveUpdateAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserSerializer
+
+    def get_object(self):
+        # TODO
+        pass
