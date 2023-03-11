@@ -20,5 +20,5 @@ from userdata.views import *
 urlpatterns = [
     path('create-rating/', CreateRatingView.as_view()),
     path('rating=<int:rtid>/RU-rating/', RURatingView.as_view()),
-    path('recipe=<int:rid>/create-comment', CreateCommentView)
+    path('recipe=<int:rid>/create-comment', CreateCommentView.as_view())
 ]
