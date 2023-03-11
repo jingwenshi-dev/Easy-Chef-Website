@@ -8,16 +8,41 @@ from recipes.models import Recipe, Step, Ingredient, RecipeIngredient
 from recipes.serializers import RecipeSerializer, StepSerializer, IngredientSerializer, RecipeIngredientSerializer
 from recipes.permissions import *
 
+"""
+API Class Naming Convention:
+For API classes with more than one functionality of CRUD, use letters for shorthand.
+E.g. RUDStepView is responsible for Retrieve, Update and Delete of a Step instance only.
+"""
 
-# Create your views here.
+
 class CreateRecipeView(CreateAPIView):
     permission_classes = [IsAuthenticated, RecipePermission]
     serializer_class = RecipeSerializer
 
 
+class RecipeEditView(RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated, RecipePermission]
+    serializer_class = RecipeSerializer
+
+    def get_object(self):
+        rid = self.kwargs.get("rid", "")
+        recipe = get_object_or_404(Recipe, pk=rid)
+        return recipe
+
+
 class CreateStepView(CreateAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, StepPermission]
     serializer_class = StepSerializer
+
+
+class RUDStepView(RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated, StepPermission]
+    serializer_class = StepSerializer
+
+    def get_object(self):
+        sid = self.kwargs.get("sid", "")
+        step = get_object_or_404(Step, pk=sid)
+        return step
 
 
 class CreateIngredientView(CreateAPIView):
@@ -33,7 +58,7 @@ class CreateRecipeIngredientView(CreateAPIView):
     serializer_class = RecipeIngredientSerializer
 
 
-class GetUpdateDestroyRecipeIngredientView(RetrieveUpdateDestroyAPIView):
+class RUDRecipeIngredientView(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = RecipeIngredientSerializer
 
@@ -56,26 +81,6 @@ class GetUpdateDestroyRecipeIngredientView(RetrieveUpdateDestroyAPIView):
         recipe_ingredient = recipe_ingredient[0]
 
         return recipe_ingredient
-
-
-class GetUpdateDestroyStepView(RetrieveUpdateDestroyAPIView):
-    permission_classes = [IsAuthenticated]
-    serializer_class = StepSerializer
-
-    def get_object(self):
-        sid = self.kwargs.get("sid", "")
-        step = get_object_or_404(Step, pk=sid)
-        return step
-
-
-class RecipeEditView(RetrieveUpdateDestroyAPIView):
-    permission_classes = [IsAuthenticated, RecipePermission]
-    serializer_class = RecipeSerializer
-
-    def get_object(self):
-        rid = self.kwargs.get("rid", "")
-        recipe = get_object_or_404(Recipe, pk=rid)
-        return recipe
 
 
 class RecipeDetailView(APIView):

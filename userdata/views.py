@@ -11,7 +11,7 @@ class CreateRatingView(CreateAPIView):
     pass
 
 
-class GetUpdateRatingView(RetrieveUpdateAPIView):
+class RURatingView(RetrieveUpdateAPIView):
     """
     A rating only need to be updated and must not be deleted
     """
@@ -24,12 +24,12 @@ class CreateCommentView(CreateAPIView):
     pass
 
 
-class GetUpdateDestroyCommentView(RetrieveUpdateDestroyAPIView):
+class RUDCommentView(RetrieveUpdateDestroyAPIView):
     """
     A comment can be updated, deleted and retrieved
     """
     # TODO
-    PASS
+    pass
 
 
 class CreateLikedRecipeView(CreateAPIView):
@@ -37,7 +37,7 @@ class CreateLikedRecipeView(CreateAPIView):
     pass
 
 
-class GetDestroyLikedRecipeView(RetrieveDestroyAPIView):
+class RDLikedRecipeView(RetrieveDestroyAPIView):
     """
     A liked recipe can only be deleted
     """
@@ -64,7 +64,7 @@ class CreateShoppingListView(CreateAPIView):
     pass
 
 
-class GetUpdateDestroyShoppingListView(RetrieveUpdateDestroyAPIView):
+class RUDShoppingListView(RetrieveUpdateDestroyAPIView):
     """
     A shopping lst can be retrieved, updated, and deleted
     """
