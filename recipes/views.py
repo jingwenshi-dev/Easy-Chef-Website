@@ -16,12 +16,12 @@ E.g. RUDStepView is responsible for Retrieve, Update and Delete of a Step instan
 
 
 class CreateRecipeView(CreateAPIView):
-    permission_classes = [IsAuthenticated, RecipePermission]
+    permission_classes = [IsAuthenticated]
     serializer_class = RecipeSerializer
 
 
 class RecipeEditView(RetrieveUpdateDestroyAPIView):
-    permission_classes = [IsAuthenticated, RecipePermission]
+    permission_classes = [IsAuthenticated, RecipeOwnershipPermission]
     serializer_class = RecipeSerializer
 
     def get_object(self):
@@ -31,12 +31,12 @@ class RecipeEditView(RetrieveUpdateDestroyAPIView):
 
 
 class CreateStepView(CreateAPIView):
-    permission_classes = [IsAuthenticated, StepPermission]
+    permission_classes = [IsAuthenticated, RecipeOwnershipPermission]
     serializer_class = StepSerializer
 
 
 class RUDStepView(RetrieveUpdateDestroyAPIView):
-    permission_classes = [IsAuthenticated, StepPermission]
+    permission_classes = [IsAuthenticated, RecipeOwnershipPermission]
     serializer_class = StepSerializer
 
     def get_object(self):
@@ -54,12 +54,12 @@ class CreateRecipeIngredientView(CreateAPIView):
     """
     Create a unique combination of recipe and ingredient with a given amount and unit
     """
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, RecipeOwnershipPermission]
     serializer_class = RecipeIngredientSerializer
 
 
 class RUDRecipeIngredientView(RetrieveUpdateDestroyAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, RecipeOwnershipPermission]
     serializer_class = RecipeIngredientSerializer
 
     def get_object(self):
