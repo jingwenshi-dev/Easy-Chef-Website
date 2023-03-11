@@ -33,30 +33,3 @@ class RecipeIngredient(models.Model):
     ingredient = models.ForeignKey(to=Ingredient, on_delete=models.CASCADE, related_name='ingredient', default=None, blank=False)
     amount = models.FloatField()
     unit = models.CharField(max_length=10)
-
-
-class Rating(models.Model):
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name='rated', default=None)
-    recipe = models.ForeignKey(to=Recipe, on_delete=models.CASCADE, related_name='rated', default=None)
-    score = models.IntegerField()
-
-
-class Comment(models.Model):
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name='commented', default=None)
-    recipe = models.ForeignKey(to=Recipe, on_delete=models.CASCADE, related_name='commented', default=None)
-    message = models.TextField(max_length=500)
-
-
-class LikedRecipe(models.Model):
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name='liked', default=None)
-    recipe = models.ForeignKey(to=Recipe, on_delete=models.CASCADE, related_name='liked', default=None)
-
-
-class BrowsedRecipe(models.Model):
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name='browsed', default=None)
-    recipe = models.ForeignKey(to=Recipe, on_delete=models.CASCADE, related_name='browsed', default=None)
-
-
-class ShoppingList(models.Model):
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name='lst', default=None)
-    recipe = models.ForeignKey(to=Recipe, on_delete=models.CASCADE, related_name='lst', default=None)
