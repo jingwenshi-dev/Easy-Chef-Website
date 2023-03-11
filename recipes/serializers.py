@@ -32,8 +32,17 @@ class RecipeSerializer(serializers.ModelSerializer):
         return recipe
 
     def update(self, instance, validated_data):
-        # TODO
-        pass
+        instance.title = validated_data['title']
+        instance.description = validated_data['description']
+        instance.picture = validated_data['picture']
+        instance.time = validated_data['time']
+        instance.time_unit = validated_data['time_unit']
+        instance.cuisine = validated_data['cuisine'],
+        instance.diet = validated_data['diet']
+
+        instance.save()
+
+        return instance
 
 
 class IngredientSerializer(serializers.ModelSerializer):

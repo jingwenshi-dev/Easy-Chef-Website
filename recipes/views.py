@@ -116,9 +116,13 @@ class GetUpdateDestroyStepView(RetrieveUpdateDestroyAPIView):
 
 
 class RecipeEditView(RetrieveUpdateDestroyAPIView):
-    # TODO
+    permission_classes = [IsAuthenticated]
+    serializer_class = RecipeSerializer
+
     def get_object(self):
-        # TODO
+        rid = self.kwargs.get("rid", "")
+        recipe = get_object_or_404(Recipe, pk=rid)
+        return recipe
 
 
 class RecipeDetailView(APIView):
