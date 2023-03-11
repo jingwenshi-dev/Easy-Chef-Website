@@ -17,7 +17,7 @@ from django.urls import path
 from userdata.views import *
 
 urlpatterns = [
-    path('create-rating/', CreateRatingView.as_view()),
+    path('recipe=<int:rid>/create-rating/', CreateRatingView.as_view()),
     path('rating=<int:rtid>/RU-rating/', RURatingView.as_view()),
 
     path('recipe=<int:rid>/create-comment/', CreateCommentView.as_view()),
@@ -27,6 +27,8 @@ urlpatterns = [
     path('liked-recipe=<int:lrid>/RD-liked-recipe/', RDLikedRecipeView.as_view()),
 
     path('recipe=<int:rid>/create-browsed-recipe/', CreateBrowsedRecipeView.as_view()),
-    path('browsed-recipe=<int:brid>/RD-browsed-recipe/', RDBrowsedRecipeView.as_view())
+    path('browsed-recipe=<int:brid>/RD-browsed-recipe/', RDBrowsedRecipeView.as_view()),
 
+    path('recipe=<int:rid>/create-shopping-lst/', CreateShoppingListView.as_view()),
+    path('shopping-lst=<int:spid>/RD-shopping-lst/', RDShoppingListView.as_view())
 ]

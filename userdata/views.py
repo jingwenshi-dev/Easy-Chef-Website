@@ -88,7 +88,7 @@ class CreateShoppingListView(CreateAPIView):
     serializer_class = ShoppingListSerializer
 
 
-class RUDShoppingListView(RetrieveUpdateDestroyAPIView):
+class RDShoppingListView(RetrieveDestroyAPIView):
     """
     A shopping lst can be retrieved, updated, and deleted
     """
