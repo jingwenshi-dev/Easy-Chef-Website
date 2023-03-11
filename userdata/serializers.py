@@ -78,3 +78,23 @@ class LikedRecipeSerializer(serializers.ModelSerializer):
         liked_recipe = LikedRecipe.objects.create(user=current_user, recipe=recipe)
 
         return liked_recipe
+
+
+class BrowsedRecipeSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+    user = UserSerializer(read_only=True)
+    recipe = RecipeSerializer(read_only=True)
+
+    class Meta:
+        model = BrowsedRecipe
+        fields = ['id', 'user', 'recipe']
+
+    def create(self, validated_data):
+        rid = self.context['view'].kwargs.get('rid')
+
+        current_user = self.context['request'].user
+        recipe = get_object_or_404(Recipe, pk=rid)
+
+        browsed_recipe = BrowsedRecipe.objects.create(user=current_user, recipe=recipe)
+
+        return browsed_recipe

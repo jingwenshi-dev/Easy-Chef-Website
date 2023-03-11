@@ -61,12 +61,12 @@ class RDLikedRecipeView(RetrieveDestroyAPIView):
     def get_object(self):
         lrid = self.kwargs.get('lrid')
         liked_recipe = get_object_or_404(LikedRecipe, pk=lrid)
-        retrun liked_recipe
+        return liked_recipe
 
 
 class CreateBrowsedRecipeView(CreateAPIView):
     permission_classes = [IsAuthenticated]
-    serializer_class = pass
+    serializer_class = BrowsedRecipeSerializer
 
 
 # Not sure if this class is needed
@@ -74,8 +74,13 @@ class DeleteBrowsedRecipeView(RetrieveDestroyAPIView):
     """
     A Browsed Recipe history can be deleted only
     """
-    # TODO
-    pass
+    permission_classes = [IsAuthenticated]
+    serializer_class = BrowsedRecipeSerializer
+
+    def get_object(self):
+        rid = self.kwargs.get('rid')
+        browsed_recipe = get_object_or_404(BrowsedRecipe, pk=rid)
+        return browsed_recipe
 
 
 class CreateShoppingListView(CreateAPIView):
