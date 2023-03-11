@@ -1,16 +1,14 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
-from accounts.serializers import UserSerializer
 from recipes.models import *
 
 
 class RecipeSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
-    user = UserSerializer(read_only=True)
 
     class Meta:
         model = Recipe
-        fields = ['id', 'user', 'title', 'description', 'picture', 'time', 'time_unit', 'cuisine', 'diet']
+        fields = ['id', 'title', 'description', 'picture', 'time', 'time_unit', 'cuisine', 'diet']
         extra_kwargs = {
             'uid': {'required': True},
             'title': {'required': True, 'max_length': 100},

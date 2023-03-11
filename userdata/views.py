@@ -2,23 +2,30 @@ from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView, Retrie
     RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 from userdata.serializers import *
+
 """
 API Class Naming Convention:
 For API classes with more than one functionality of CRUD, use letters for shorthand.
 E.g. RUDStepView is responsible for Retrieve, Update and Delete of a Step instance only.
 """
 
+
 class CreateRatingView(CreateAPIView):
     permission_classes = [IsAuthenticated]
-    # TODO
+    serializer_class = RatingSerializer
 
 
 class RURatingView(RetrieveUpdateAPIView):
     """
     A rating only need to be updated and must not be deleted
     """
-    # TODO
-    pass
+    permission_classes = [IsAuthenticated]
+    serializer_class = RatingSerializer
+
+    def get_object(self):
+        rtid = self.kwargs.get("rtid", "")
+        rating = get_object_or_404(Rating, pk=rtid)
+        return rating
 
 
 class CreateCommentView(CreateAPIView):
