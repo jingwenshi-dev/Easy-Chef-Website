@@ -18,7 +18,7 @@ from django.urls import path
 from recipes.views import CreateRecipeView, RecipeDetailView, CreateStepView, CreateIngredientView, CreateRecipeIngredientView, GetUpdateDestroyRecipeIngredientView, GetUpdateDestroyStepView, RecipeEditView
 
 urlpatterns = [
-    path('create-recipe/', CreateRecipeView.as_view()),
+    path('user=<int:uid>/create-recipe/', CreateRecipeView.as_view()),
     path('recipe=<int:rid>/create-step/', CreateStepView.as_view()),
     path('recipe=<int:rid>/create-ingredient/', CreateIngredientView.as_view()),
     path('recipe=<int:rid>&ingredient=<int:iid>/create-recipe-ingredient/', CreateRecipeIngredientView.as_view()),
