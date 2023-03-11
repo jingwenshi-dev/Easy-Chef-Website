@@ -44,6 +44,10 @@ class IngredientSerializer(serializers.ModelSerializer):
 
 
 class RecipeIngredientSerializer(serializers.ModelSerializer):
+    """
+    Serializer for RecipeIngredient model.
+    Be able to include all fields' of its FK when return
+    """
     id = serializers.IntegerField(read_only=True)
     ingredient = IngredientSerializer(read_only=True)
 
