@@ -48,20 +48,25 @@ class RUDCommentView(RetrieveUpdateDestroyAPIView):
 
 class CreateLikedRecipeView(CreateAPIView):
     permission_classes = [IsAuthenticated]
-    serializer_class = pass
+    serializer_class = LikedRecipeSerializer
 
 
 class RDLikedRecipeView(RetrieveDestroyAPIView):
     """
     A liked recipe can only be deleted
     """
-    # TODO
-    pass
+    permission_classes = [IsAuthenticated]
+    serializer_class = LikedRecipeSerializer
+
+    def get_object(self):
+        lrid = self.kwargs.get('lrid')
+        liked_recipe = get_object_or_404(LikedRecipe, pk=lrid)
+        retrun liked_recipe
 
 
 class CreateBrowsedRecipeView(CreateAPIView):
-    # TODO
-    pass
+    permission_classes = [IsAuthenticated]
+    serializer_class = pass
 
 
 # Not sure if this class is needed
