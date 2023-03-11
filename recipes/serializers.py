@@ -89,8 +89,13 @@ class StepSerializer(serializers.ModelSerializer):
         return step
 
     def update(self, instance, validated_data):
-        pass
-        # TODO
+        instance.number = validated_data["number"]
+        instance.description = validated_data["description"]
+        instance.picture = validated_data["picture"]
+
+        instance.save()
+
+        return instance
 
 
 class RecipeSerializer(serializers.ModelSerializer):

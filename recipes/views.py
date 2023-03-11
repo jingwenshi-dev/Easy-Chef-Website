@@ -81,7 +81,6 @@ class CreateRecipeIngredientView(CreateAPIView):
 
 
 class GetUpdateDestroyRecipeIngredientView(RetrieveUpdateDestroyAPIView):
-
     permission_classes = [IsAuthenticated]
     serializer_class = RecipeIngredientSerializer
 
@@ -109,7 +108,11 @@ class GetUpdateDestroyRecipeIngredientView(RetrieveUpdateDestroyAPIView):
 class GetUpdateDestroyStepView(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = StepSerializer
-    # TODO
+
+    def get_object(self):
+        sid = self.kwargs.get("sid", "")
+        step = get_object_or_404(Step, pk=sid)
+        return step
 
 
 class RecipeDetailView(APIView):
