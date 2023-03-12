@@ -20,5 +20,7 @@ urlpatterns = [
     path('popular-recipes/', PopularRecipes.as_view()),
     path('autocomplete/', IngredientAutocomplete.as_view()),
     path('my-recipe/', MyRecipe.as_view()),
-    path('search/', SearchByName.as_view())
+    path('search/name/', SearchByName.as_view()),
+    path('search/ingredient/', SearchByIngredient.as_view()),
+    path('search/creator/', SearchByCreator.as_view())
 ]
