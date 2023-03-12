@@ -43,9 +43,10 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ['id', 'user', 'recipe', 'message']
+        fields = ['id', 'user', 'recipe', 'message', 'file']
         extra_kwargs = {
-            'message': {'required': True}
+            'message': {'required': True},
+            'file': {'required': False}
         }
 
     def create(self, validated_data):
@@ -54,13 +55,15 @@ class CommentSerializer(serializers.ModelSerializer):
         current_user = self.context['request'].user
         recipe = get_object_or_404(Recipe, pk=rid)
         message = validated_data['message']
+        file = validated_data['file']
 
-        comment = Comment.objects.create(user=current_user, recipe=recipe, message=message)
+        comment = Comment.objects.create(user=current_user, recipe=recipe, message=message, file=file)
 
         return comment
 
     def update(self, instance, validated_data):
         instance.message = validated_data['message']
+        instance.file = validated_data['file']
         instance.save()
         return instance
 
