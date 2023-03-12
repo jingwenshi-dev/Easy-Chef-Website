@@ -50,11 +50,11 @@ class SearchByName(ListAPIView):
     serializer_class = RecipeSerializer
 
     def get_queryset(self):
-        name = self.kwargs.get('name')
-        cuisine = self.kwargs.get('cuisine')
-        diet = self.kwargs.get('diet')
-        time = self.kwargs.get('time')
-        time_unit = self.kwargs.get('unit')
+        name = self.request.query_params.get('name')
+        cuisine = self.request.query_params.get('cuisine')
+        diet = self.request.query_params.get('diet')
+        time = self.request.query_params.get('time')
+        time_unit = self.request.query_params.get('unit')
         recipe_queue = Recipe.objects.filter(title__icontains=name, diet=diet, cuisine=cuisine, time=time, time_unit=time_unit)
         recipe_queue = recipe_queue.annotate(num_likes=Count('liked')).order_by('-num_likes')
         return recipe_queue
@@ -70,11 +70,11 @@ class SearchByIngredient(ListAPIView):
     serializer_class = RecipeSerializer
 
     def get_queryset(self):
-        ingredient = self.kwargs.get('ingredient')
-        cuisine = self.kwargs.get('cuisine')
-        diet = self.kwargs.get('diet')
-        time = self.kwargs.get('time')
-        time_unit = self.kwargs.get('unit')
+        ingredient = self.request.query_params.get('ingredient')
+        cuisine = self.request.query_params.get('cuisine')
+        diet = self.request.query_params.get('diet')
+        time = self.request.query_params.get('time')
+        time_unit = self.request.query_params.get('unit')
 
         recipe_queue = Recipe.objects.all()
         recipe_queue = recipe_queue.filter(recipe__ingredient__name__icontains=ingredient, diet=diet, cuisine=cuisine,
@@ -93,11 +93,11 @@ class SearchByCreator(ListAPIView):
     serializer_class = RecipeSerializer
 
     def get_queryset(self):
-        creator = self.kwargs.get('creator')
-        cuisine = self.kwargs.get('cuisine')
-        diet = self.kwargs.get('diet')
-        time = self.kwargs.get('time')
-        time_unit = self.kwargs.get('unit')
+        creator = self.request.query_params.get('creator')
+        cuisine = self.request.query_params.get('cuisine')
+        diet = self.request.query_params.get('diet')
+        time = self.request.query_params.get('time')
+        time_unit = self.request.query_params.get('unit')
 
         recipe_queue = Recipe.objects.all()
 
