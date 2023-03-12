@@ -17,7 +17,7 @@ class PopularRecipes(ListAPIView):
         return recipes
 
 
-class MyRecipe():
+class MyRecipe(ListAPIView):
     """
     Return three list of recipes: Created, Liked, Interacted (create, like, rate, or comment)
     Note: You may want to use pagination.
@@ -36,8 +36,13 @@ class SearchByName(ListAPIView):
     serializer_class = RecipeSerializer
 
     def get_queryset(self):
-        # TODO
-        pass
+        name = self.kwargs.get('name')
+        cuisine = self.kwargs.get('cuisine')
+        diet = self.kwargs.get('diet')
+        time = self.kwargs.get('time')
+        recipe_queue = Recipe.objects.filter(title__icontains=name, diet=diet, cuisine=cuisine, time=time)
+        recipe_queue = recipe_queue.annotate(num_likes=Count('liked')).order_by('-num_likes')
+        return recipe_queue
 
 
 class SearchByIngredient(ListAPIView):
@@ -73,7 +78,7 @@ class IngredientAutocomplete(ListAPIView):
     serializer_class = IngredientSerializer
 
     def get_queryset(self):
-        name = self.kwargs.get('name')
+        name = self.request.query_params.get('ingredient')
         return Ingredient.objects.filter(name__startswith=name)
 
 

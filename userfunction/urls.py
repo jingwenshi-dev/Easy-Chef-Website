@@ -18,5 +18,7 @@ from userfunction.views import *
 
 urlpatterns = [
     path('popular-recipes/', PopularRecipes.as_view()),
-    path('autocomplete/ingredient=<str:name>/', IngredientAutocomplete.as_view())
+    path('autocomplete/', IngredientAutocomplete.as_view()),
+    path('my-recipe/', MyRecipe.as_view()),
+    path('search/', SearchByName.as_view())
 ]
