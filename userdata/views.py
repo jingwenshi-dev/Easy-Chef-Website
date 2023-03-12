@@ -2,6 +2,7 @@ from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView, Retrie
     RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 from userdata.serializers import *
+from userdata.permissions import *
 
 """
 API Class Naming Convention:
@@ -19,7 +20,7 @@ class RURatingView(RetrieveUpdateAPIView):
     """
     A rating only need to be updated and must not be deleted
     """
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, UserDataPermission]
     serializer_class = RatingSerializer
 
     def get_object(self):
@@ -37,7 +38,7 @@ class RUDCommentView(RetrieveUpdateDestroyAPIView):
     """
     A comment can be updated, deleted and retrieved
     """
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, UserDataPermission]
     serializer_class = CommentSerializer
 
     def get_object(self):
@@ -55,7 +56,7 @@ class RDLikedRecipeView(RetrieveDestroyAPIView):
     """
     A liked recipe can only be deleted
     """
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, UserDataPermission]
     serializer_class = LikedRecipeSerializer
 
     def get_object(self):
@@ -70,16 +71,16 @@ class CreateBrowsedRecipeView(CreateAPIView):
 
 
 # Not sure if this class is needed
-class DeleteBrowsedRecipeView(RetrieveDestroyAPIView):
+class RDBrowsedRecipeView(RetrieveDestroyAPIView):
     """
     A Browsed Recipe history can be deleted only
     """
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, UserDataPermission]
     serializer_class = BrowsedRecipeSerializer
 
     def get_object(self):
-        rid = self.kwargs.get('rid')
-        browsed_recipe = get_object_or_404(BrowsedRecipe, pk=rid)
+        brid = self.kwargs.get('brid')
+        browsed_recipe = get_object_or_404(BrowsedRecipe, pk=brid)
         return browsed_recipe
 
 
@@ -88,11 +89,11 @@ class CreateShoppingListView(CreateAPIView):
     serializer_class = ShoppingListSerializer
 
 
-class RUDShoppingListView(RetrieveUpdateDestroyAPIView):
+class RDShoppingListView(RetrieveDestroyAPIView):
     """
     A shopping lst can be retrieved, updated, and deleted
     """
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, UserDataPermission]
     serializer_class = ShoppingListSerializer
 
     def get_object(self):

@@ -6,6 +6,7 @@ from accounts.serializers import *
 class RatingSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
     user = UserSerializer(read_only=True)
+    recipe = RecipeSerializer(read_only=True)
 
     class Meta:
         model = Rating
@@ -20,6 +21,9 @@ class RatingSerializer(serializers.ModelSerializer):
         current_user = self.context['request'].user
         recipe = get_object_or_404(Recipe, pk=rid)
         score = validated_data['score']
+
+        if Rating.objects.filter(user=current_user, recipe=recipe).exists():
+            raise serializers.ValidationError({"detail": "The current user has already rated this recipe."})
 
         rating = Rating.objects.create(user=current_user, recipe=recipe, score=score)
 
@@ -55,7 +59,7 @@ class CommentSerializer(serializers.ModelSerializer):
         return comment
 
     def update(self, instance, validated_data):
-        instance.comment = validated_data['comment']
+        instance.message = validated_data['message']
         instance.save()
         return instance
 
@@ -74,6 +78,9 @@ class LikedRecipeSerializer(serializers.ModelSerializer):
 
         current_user = self.context['request'].user
         recipe = get_object_or_404(Recipe, pk=rid)
+
+        if LikedRecipe.objects.filter(user=current_user, recipe=recipe).exists():
+            raise serializers.ValidationError({"detail": "The current user has already liked this recipe."})
 
         liked_recipe = LikedRecipe.objects.create(user=current_user, recipe=recipe)
 
@@ -95,6 +102,9 @@ class BrowsedRecipeSerializer(serializers.ModelSerializer):
         current_user = self.context['request'].user
         recipe = get_object_or_404(Recipe, pk=rid)
 
+        if BrowsedRecipe.objects.filter(user=current_user, recipe=recipe).exists():
+            raise serializers.ValidationError({"detail": "The current user has already browsed this recipe."})
+
         browsed_recipe = BrowsedRecipe.objects.create(user=current_user, recipe=recipe)
 
         return browsed_recipe
@@ -106,7 +116,7 @@ class ShoppingListSerializer(serializers.ModelSerializer):
     recipe = RecipeSerializer(read_only=True)
 
     class Meta:
-        mode = ShoppingList
+        model = ShoppingList
         fields = ['id', 'user', 'recipe']
 
     def create(self, validated_data):
@@ -114,6 +124,9 @@ class ShoppingListSerializer(serializers.ModelSerializer):
 
         current_user = self.context['request'].user
         recipe = get_object_or_404(Recipe, pk=rid)
+
+        if ShoppingList.objects.filter(user=current_user, recipe=recipe).exists():
+            raise serializers.ValidationError({"detail": "The current user has already add this recipe to the shopping list."})\
 
         shopping_lst = ShoppingList.objects.create(user=current_user, recipe=recipe)
 
