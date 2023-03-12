@@ -23,5 +23,6 @@ urlpatterns = [
     path('my-recipe/', MyRecipe.as_view()),
     path('search/name/', SearchByName.as_view()),
     path('search/ingredient/', SearchByIngredient.as_view()),
-    path('search/creator/', SearchByCreator.as_view())
+    path('search/creator/', SearchByCreator.as_view()),
+    # path('shopping-list/', DisplayShoppingList.as_view())
 ]
