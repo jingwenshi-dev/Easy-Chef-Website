@@ -1,16 +1,20 @@
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated
 from recipes.serializers import *
+from django.db.models import Count
 
 
 # Create your views here.
-class PopularRecipes():
+class PopularRecipes(ListAPIView):
     """
     Return a list of recipes based on its overall rating or the number of users marked them as favorite.
     Note: You may want to use pagination.
     """
-    # TODO
-    pass
+    serializer_class = RecipeSerializer
+
+    def get_queryset(self):
+        recipes = Recipe.objects.annotate(num_likes=Count('liked')).order_by('-num_likes')
+        return recipes
 
 
 class MyRecipe():
@@ -22,7 +26,7 @@ class MyRecipe():
     pass
 
 
-class Serach():
+class Search(ListAPIView):
     """
     Search recipes by name, ingredients, or creator.
     Then filter by cuisine, diet, or cooking time if these parameters are given.
