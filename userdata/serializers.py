@@ -56,7 +56,7 @@ class CommentSerializer(serializers.ModelSerializer):
         return comment
 
     def update(self, instance, validated_data):
-        instance.comment = validated_data['comment']
+        instance.message = validated_data['message']
         instance.save()
         return instance
 
@@ -107,7 +107,7 @@ class ShoppingListSerializer(serializers.ModelSerializer):
     recipe = RecipeSerializer(read_only=True)
 
     class Meta:
-        mode = ShoppingList
+        model = ShoppingList
         fields = ['id', 'user', 'recipe']
 
     def create(self, validated_data):
