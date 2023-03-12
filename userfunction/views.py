@@ -5,6 +5,7 @@ from django.db.models import Count
 from django.http import JsonResponse
 from rest_framework import status
 from itertools import chain
+from django.core import serializers
 
 
 # Create your views here.
@@ -31,6 +32,7 @@ class MyRecipe(ListAPIView):
     def list(self, request):
         user = request.user
         created = user.created_recipe.all()
+        created = serializers.serialize('json', created)
         rated = user.rated.all().values_list('recipe')
         commented = user.commented.all().values_list('recipe')
         liked = user.liked.all().values_list('recipe')
