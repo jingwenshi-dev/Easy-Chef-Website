@@ -125,6 +125,8 @@ class DisplayShoppingList(APIView):
     """
     Return combined ingredients and corresponding combined amount with unit.
     """
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
         user = request.user
         shopping_lst = ShoppingList.objects.filter(user=user)
