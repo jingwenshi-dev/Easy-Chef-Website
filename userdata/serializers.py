@@ -85,6 +85,28 @@ class LikedRecipeSerializer(serializers.ModelSerializer):
         liked_recipe = LikedRecipe.objects.create(user=current_user, recipe=recipe)
 
         return liked_recipe
+    
+class FavoritedRecipeSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+    user = UserSerializer(read_only=True)
+    recipe = RecipeSerializer(read_only=True)
+
+    class Meta:
+        model = FavoritedRecipe
+        fields = ['id', 'user', 'recipe']
+
+    def create(self, validated_data):
+        rid = self.context['view'].kwargs.get('rid')
+
+        current_user = self.context['request'].user
+        recipe = get_object_or_404(Recipe, pk=rid)
+
+        if FavoritedRecipe.objects.filter(user=current_user, recipe=recipe).exists():
+            raise serializers.ValidationError({"detail": "The current user has already favorited this recipe."})
+
+        favorited_recipe = FavoritedRecipe.objects.create(user=current_user, recipe=recipe)
+
+        return favorited_recipe
 
 
 class BrowsedRecipeSerializer(serializers.ModelSerializer):

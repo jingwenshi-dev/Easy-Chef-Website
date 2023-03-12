@@ -2,6 +2,11 @@ from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated
 from recipes.serializers import *
 from django.db.models import Count
+from django.http import JsonResponse
+from rest_framework import status
+from ..userdata.models import Rating, Comment, LikedRecipe, BrowsedRecipe
+from itertools import chain
+
 
 
 # Create your views here.
@@ -17,13 +22,23 @@ class PopularRecipes(ListAPIView):
         return recipes
 
 
-class MyRecipe():
+class MyRecipe(ListAPIView):
     """
     Return three list of recipes: Created, Liked, Interacted (create, like, rate, or comment)
     Note: You may want to use pagination.
     """
-    # TODO
-    pass
+    permission_classes = [IsAuthenticated]
+    serializer_class = RecipeSerializer
+
+    def list(self, request):
+        user = request.user
+        created = user.recipes.all()
+        rated = user.rated.all().values_list('recipe')
+        commented = user.commented.all().values_list('recipe')
+        liked = user.liked.all().values_list('recipe')
+        favorited = user.favorited.all().values_list('recipe')
+        interacted = chain(created, rated, liked, commented)
+        return JsonResponse({'created': created, 'favorited': favorited, 'interacted': interacted}, safe=False, status=status.HTTP_200_OK)
 
 
 class SearchByName(ListAPIView):

@@ -83,6 +83,22 @@ class RDBrowsedRecipeView(RetrieveDestroyAPIView):
         browsed_recipe = get_object_or_404(BrowsedRecipe, pk=brid)
         return browsed_recipe
 
+class CreateFavoritedRecipeView(CreateAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = LikedRecipeSerializer
+
+
+class RDFavoritedRecipeView(RetrieveDestroyAPIView):
+    """
+    A liked recipe can only be deleted
+    """
+    permission_classes = [IsAuthenticated, UserDataPermission]
+    serializer_class = FavoritedRecipeSerializer
+
+    def get_object(self):
+        frid = self.kwargs.get('lrid')
+        fiked_recipe = get_object_or_404(FavoritedRecipe, pk=frid)
+        return fiked_recipe
 
 class CreateShoppingListView(CreateAPIView):
     permission_classes = [IsAuthenticated]

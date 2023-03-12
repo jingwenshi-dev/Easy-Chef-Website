@@ -21,6 +21,10 @@ class LikedRecipe(models.Model):
     user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name='liked', default=None)
     recipe = models.ForeignKey(to=Recipe, on_delete=models.CASCADE, related_name='liked', default=None)
 
+class FavoritedRecipe(models.Model):
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name='favorited', default=None)
+    recipe = models.ForeignKey(to=Recipe, on_delete=models.CASCADE, related_name='favorited', default=None)
+
 
 class BrowsedRecipe(models.Model):
     user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name='browsed', default=None)
