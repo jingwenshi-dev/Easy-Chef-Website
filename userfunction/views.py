@@ -7,7 +7,6 @@ from rest_framework import status
 from itertools import chain
 
 
-
 # Create your views here.
 class PopularRecipes(ListAPIView):
     """
@@ -31,13 +30,14 @@ class MyRecipe(ListAPIView):
 
     def list(self, request):
         user = request.user
-        created = user.recipes.all()
+        created = user.created_recipe.all()
         rated = user.rated.all().values_list('recipe')
         commented = user.commented.all().values_list('recipe')
         liked = user.liked.all().values_list('recipe')
         favorited = user.favorited.all().values_list('recipe')
         interacted = chain(created, rated, liked, commented)
-        return JsonResponse({'created': created, 'favorited': favorited, 'interacted': interacted}, safe=False, status=status.HTTP_200_OK)
+        return JsonResponse({'created': created, 'favorited': favorited, 'interacted': interacted}, safe=False,
+                            status=status.HTTP_200_OK)
 
 
 class SearchByName(ListAPIView):
@@ -50,11 +50,12 @@ class SearchByName(ListAPIView):
     serializer_class = RecipeSerializer
 
     def get_queryset(self):
-        name = self.kwargs.get('name')
-        cuisine = self.kwargs.get('cuisine')
-        diet = self.kwargs.get('diet')
-        time = self.kwargs.get('time')
-        recipe_queue = Recipe.objects.filter(title__icontains=name, diet=diet, cuisine=cuisine, time=time)
+        name = self.request.query_params.get('name')
+        cuisine = self.request.query_params.get('cuisine')
+        diet = self.request.query_params.get('diet')
+        time = self.request.query_params.get('time')
+        time_unit = self.request.query_params.get('unit')
+        recipe_queue = Recipe.objects.filter(title__icontains=name, diet__icontains=diet, cuisine__icontains=cuisine, time=time, time_unit__icontains=time_unit)
         recipe_queue = recipe_queue.annotate(num_likes=Count('liked')).order_by('-num_likes')
         return recipe_queue
 
@@ -69,8 +70,17 @@ class SearchByIngredient(ListAPIView):
     serializer_class = RecipeSerializer
 
     def get_queryset(self):
-        # TODO
-        pass
+        ingredient = self.request.query_params.get('ingredient')
+        cuisine = self.request.query_params.get('cuisine')
+        diet = self.request.query_params.get('diet')
+        time = self.request.query_params.get('time')
+        time_unit = self.request.query_params.get('unit')
+
+        recipe_queue = Recipe.objects.all()
+        recipe_queue = recipe_queue.filter(recipe__ingredient__name__icontains=ingredient, diet__icontains=diet, cuisine__icontains=cuisine, time=time, time_unit__icontains=time_unit)
+        recipe_queue = recipe_queue.annotate(num_likes=Count('liked')).order_by('-num_likes')
+
+        return recipe_queue
 
 
 class SearchByCreator(ListAPIView):
@@ -83,14 +93,16 @@ class SearchByCreator(ListAPIView):
     serializer_class = RecipeSerializer
 
     def get_queryset(self):
-        creator = self.kwargs.get('creator')
-        cuisine = self.kwargs.get('cuisine')
-        diet = self.kwargs.get('diet')
-        time = self.kwargs.get('time')
+        creator = self.request.query_params.get('creator')
+        cuisine = self.request.query_params.get('cuisine')
+        diet = self.request.query_params.get('diet')
+        time = self.request.query_params.get('time')
+        time_unit = self.request.query_params.get('unit')
 
         recipe_queue = Recipe.objects.all()
 
-        recipe_queue = recipe_queue.filter(user__username__icontains=creator, diet=diet, cuisine=cuisine, time=time)
+        recipe_queue = recipe_queue.filter(user__username__icontains=creator, diet__icontains=diet, cuisine__icontains=cuisine, time=time, time_unit__icontains=time_unit)
+        recipe_queue = recipe_queue.annotate(num_likes=Count('liked')).order_by('-num_likes')
 
         return recipe_queue
 
@@ -104,7 +116,7 @@ class IngredientAutocomplete(ListAPIView):
         return Ingredient.objects.filter(name__istartswith=name)
 
 
-class DisplayShoppingList():
+class DisplayShoppingList(# TODO):
     """
     Return combined ingredients and corresponding combined amount with unit.
     """
