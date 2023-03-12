@@ -116,7 +116,7 @@ class IngredientAutocomplete(ListAPIView):
         return Ingredient.objects.filter(name__istartswith=name)
 
 
-class DisplayShoppingList(# TODO):
+class DisplayShoppingList():
     """
     Return combined ingredients and corresponding combined amount with unit.
     """
