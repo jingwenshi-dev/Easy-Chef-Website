@@ -1,11 +1,11 @@
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.pagination import PageNumberPagination
 from recipes.serializers import *
 from django.db.models import Count
-from django.http import JsonResponse
 from rest_framework import status
+from rest_framework.response import Response
 from itertools import chain
-from django.core import serializers
 
 
 # Create your views here.
@@ -28,17 +28,23 @@ class MyRecipe(ListAPIView):
     """
     permission_classes = [IsAuthenticated]
     serializer_class = RecipeSerializer
+    pagination_class = PageNumberPagination
+
 
     def list(self, request):
         user = request.user
-        created = user.created_recipe.all()
-        created = serializers.serialize('json', created)
-        rated = user.rated.all().values_list('recipe')
-        commented = user.commented.all().values_list('recipe')
-        liked = user.liked.all().values_list('recipe')
+        created_query = user.creator.all()
+        created = [RecipeSerializer(recipe).data for recipe in created_query]
+        rated_query = user.rated.all()
+        rated = [RecipeSerializer(rate.recipe).data for rate in rated_query]
+        commented_query = user.commented.all()
+        commented = [RecipeSerializer(comment.recipe).data for comment in commented_query]
+        liked_query = user.liked.all()
+        liked = [RecipeSerializer(like.recipe).data for like in liked_query]
         favorited = user.favorited.all().values_list('recipe')
-        interacted = chain(created, rated, liked, commented)
-        return JsonResponse({'created': created, 'favorited': favorited, 'interacted': interacted}, safe=False,
+        interacted = created + rated + commented + liked
+        interacted_distinct = [dict(t) for t in {tuple(d.items()) for d in interacted}]
+        return Response({'created': created, 'favorited': favorited, 'interacted': interacted_distinct},
                             status=status.HTTP_200_OK)
 
 
