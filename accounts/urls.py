@@ -19,12 +19,12 @@ from django.contrib import admin
 from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-from accounts.views import SignUpView, LogOutView
+from accounts.views import SignUpView, LogOutView, EditProfileView
 
 urlpatterns = [
     path('signup/', SignUpView.as_view()),
     path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('logout/', LogOutView.as_view()),
-    # path('<int:uid>/profile/details/', None),
-    # path('<int:uid>/profile/edit/', None)
+    path('user=<int:uid>/profile/details/', EditProfileView.as_view(), name='details'),
+    path('user=<int:uid>/profile/edit/', EditProfileView.as_view(), name='edit'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
