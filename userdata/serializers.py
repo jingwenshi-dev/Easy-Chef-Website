@@ -1,6 +1,7 @@
 from userdata.models import *
 from recipes.serializers import *
-from accounts.serializers import *
+from accounts.serializers import UserSerializer
+from recipes.serializers import RecipeSerializer
 
 
 class RatingSerializer(serializers.ModelSerializer):
@@ -85,7 +86,8 @@ class LikedRecipeSerializer(serializers.ModelSerializer):
         liked_recipe = LikedRecipe.objects.create(user=current_user, recipe=recipe)
 
         return liked_recipe
-    
+
+
 class FavoritedRecipeSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
     user = UserSerializer(read_only=True)
@@ -148,8 +150,8 @@ class ShoppingListSerializer(serializers.ModelSerializer):
         recipe = get_object_or_404(Recipe, pk=rid)
 
         if ShoppingList.objects.filter(user=current_user, recipe=recipe).exists():
-            raise serializers.ValidationError({"detail": "The current user has already add this recipe to the shopping list."})\
-
+            raise serializers.ValidationError(
+                {"detail": "The current user has already add this recipe to the shopping list."})
         shopping_lst = ShoppingList.objects.create(user=current_user, recipe=recipe)
 
         return shopping_lst

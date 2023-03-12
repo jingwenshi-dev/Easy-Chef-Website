@@ -1,14 +1,19 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
+
 from recipes.models import *
 
 
 class RecipeSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
+    likes = serializers.SerializerMethodField('get_likes', read_only=True)
+    rating = serializers.SerializerMethodField('get_avg_rating', read_only=True)
+
+    # comment = CommentSerializer(many=True, read_only=True)
 
     class Meta:
         model = Recipe
-        fields = ['id', 'title', 'description', 'picture', 'time', 'time_unit', 'cuisine', 'diet']
+        fields = ['id', 'title', 'description', 'picture', 'time', 'time_unit', 'cuisine', 'diet', 'likes', 'rating']
         extra_kwargs = {
             'uid': {'required': True},
             'title': {'required': True, 'max_length': 100},
@@ -41,6 +46,17 @@ class RecipeSerializer(serializers.ModelSerializer):
         instance.save()
 
         return instance
+
+    def get_likes(self, instance):
+        return instance.liked.count()
+
+    def get_avg_rating(self, instance):
+        rating_queue = instance.rated.all()
+        total_score = sum([rating.score for rating in rating_queue])
+        count = instance.rated.count()
+        if count == 0:
+            return 0
+        return total_score / count
 
 
 class IngredientSerializer(serializers.ModelSerializer):
@@ -87,8 +103,9 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
         unit = validated_data['unit']
 
         if RecipeIngredient.objects.filter(recipe=recipe, ingredient=ingredient).exists():
-            raise serializers.ValidationError({"detail": "The current combination of recipe and ingredient already exist ("
-                                                         "Hint: Update or Destroy current object)."})
+            raise serializers.ValidationError(
+                {"detail": "The current combination of recipe and ingredient already exist ("
+                           "Hint: Update or Destroy current object)."})
 
         recipe_ingredient, created = RecipeIngredient.objects.update_or_create(recipe=recipe, ingredient=ingredient,
                                                                                amount=amount, unit=unit)
