@@ -12,7 +12,7 @@ E.g. RUDStepView is responsible for Retrieve, Update and Delete of a Step instan
 
 
 class CreateRatingView(CreateAPIView):
-    permission_classes = [IsAuthenticated, UserDataPermission]
+    permission_classes = [IsAuthenticated]
     serializer_class = RatingSerializer
 
 
@@ -30,7 +30,7 @@ class RURatingView(RetrieveUpdateAPIView):
 
 
 class CreateCommentView(CreateAPIView):
-    permission_classes = [IsAuthenticated,UserDataPermission]
+    permission_classes = [IsAuthenticated]
     serializer_class = CommentSerializer
 
 
@@ -48,7 +48,7 @@ class RUDCommentView(RetrieveUpdateDestroyAPIView):
 
 
 class CreateLikedRecipeView(CreateAPIView):
-    permission_classes = [IsAuthenticated, UserDataPermission]
+    permission_classes = [IsAuthenticated]
     serializer_class = LikedRecipeSerializer
 
 
@@ -66,7 +66,7 @@ class RDLikedRecipeView(RetrieveDestroyAPIView):
 
 
 class CreateBrowsedRecipeView(CreateAPIView):
-    permission_classes = [IsAuthenticated, UserDataPermission]
+    permission_classes = [IsAuthenticated]
     serializer_class = BrowsedRecipeSerializer
 
 
@@ -85,7 +85,7 @@ class RDBrowsedRecipeView(RetrieveDestroyAPIView):
 
 
 class CreateShoppingListView(CreateAPIView):
-    permission_classes = [IsAuthenticated, UserDataPermission]
+    permission_classes = [IsAuthenticated]
     serializer_class = ShoppingListSerializer
 
 
