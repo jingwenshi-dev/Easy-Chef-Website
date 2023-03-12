@@ -69,8 +69,15 @@ class SearchByIngredient(ListAPIView):
     serializer_class = RecipeSerializer
 
     def get_queryset(self):
-        # TODO
-        pass
+        ingredient = self.kwargs.get('ingredient')
+        cuisine = self.kwargs.get('cuisine')
+        diet = self.kwargs.get('diet')
+        time = self.kwargs.get('time')
+
+        recipe_queue = Recipe.objects.all()
+        recipe_queue = recipe_queue.filter(recipe__ingredient__name__icontains=ingredient, diet=diet, cuisine=cuisine, time=time)
+
+        return recipe_queue
 
 
 class SearchByCreator(ListAPIView):
