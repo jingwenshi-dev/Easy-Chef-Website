@@ -4,7 +4,6 @@ from recipes.serializers import *
 from django.db.models import Count
 from django.http import JsonResponse
 from rest_framework import status
-from ..userdata.models import Rating, Comment, LikedRecipe, BrowsedRecipe
 from itertools import chain
 
 
