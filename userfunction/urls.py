@@ -13,13 +13,9 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
+from userfunction.views import *
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('accounts/', include('accounts.urls')),
-    path('recipes/', include('recipes.urls')),
-    path('userdata/', include('userdata.urls')),
-    path('userfunction/', include('userfunction.urls'))
+    path('autocomplete/ingredient=<str:name>/', IngredientAutocomplete.as_view())
 ]

@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from rest_framework.generics import ListAPIView
+from rest_framework.permissions import IsAuthenticated
+from recipes.serializers import *
 
 
 # Create your views here.
@@ -31,9 +33,13 @@ class Serach():
     pass
 
 
-class IngredientAutocomplete():
-    # TODO
-    pass
+class IngredientAutocomplete(ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = IngredientSerializer
+
+    def get_queryset(self):
+        name = self.kwargs.get('name')
+        return Ingredient.objects.filter(name__startswith=name)
 
 
 class DisplayShoppingList():
@@ -42,4 +48,3 @@ class DisplayShoppingList():
     """
     # TODO
     pass
-
