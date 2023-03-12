@@ -44,5 +44,7 @@ class UserSerializer(serializers.ModelSerializer):
         instance.email = validated_data['email']
         instance.password = validated_data['password']
         instance.password2 = validated_data['password2']
+        instance.phone = validated_data['phone']
+        instance.avatar = validated_data['avatar']
         instance.save()
         return instance
