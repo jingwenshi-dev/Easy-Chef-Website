@@ -26,15 +26,46 @@ class MyRecipe():
     pass
 
 
-class Search(ListAPIView):
+class SearchByName(ListAPIView):
     """
     Search recipes by name, ingredients, or creator.
     Then filter by cuisine, diet, or cooking time if these parameters are given.
     Finally, rank the recipes by their ratings and likes.
     Note: You may want to use pagination.
     """
-    # TODO
-    pass
+    serializer_class = RecipeSerializer
+
+    def get_queryset(self):
+        # TODO
+        pass
+
+
+class SearchByIngredient(ListAPIView):
+    """
+    Search recipes by name, ingredients, or creator.
+    Then filter by cuisine, diet, or cooking time if these parameters are given.
+    Finally, rank the recipes by their ratings and likes.
+    Note: You may want to use pagination.
+    """
+    serializer_class = RecipeSerializer
+
+    def get_queryset(self):
+        # TODO
+        pass
+
+
+class SearchByCreator(ListAPIView):
+    """
+    Search recipes by name, ingredients, or creator.
+    Then filter by cuisine, diet, or cooking time if these parameters are given.
+    Finally, rank the recipes by their ratings and likes.
+    Note: You may want to use pagination.
+    """
+    serializer_class = RecipeSerializer
+
+    def get_queryset(self):
+        # TODO
+        pass
 
 
 class IngredientAutocomplete(ListAPIView):
