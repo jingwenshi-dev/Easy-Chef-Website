@@ -55,7 +55,7 @@ class SearchByName(ListAPIView):
         diet = self.request.query_params.get('diet')
         time = self.request.query_params.get('time')
         time_unit = self.request.query_params.get('unit')
-        recipe_queue = Recipe.objects.filter(title__icontains=name, diet=diet, cuisine=cuisine, time=time, time_unit=time_unit)
+        recipe_queue = Recipe.objects.filter(title__icontains=name, diet__icontains=diet, cuisine__icontains=cuisine, time=time, time_unit__icontains=time_unit)
         recipe_queue = recipe_queue.annotate(num_likes=Count('liked')).order_by('-num_likes')
         return recipe_queue
 
@@ -77,8 +77,7 @@ class SearchByIngredient(ListAPIView):
         time_unit = self.request.query_params.get('unit')
 
         recipe_queue = Recipe.objects.all()
-        recipe_queue = recipe_queue.filter(recipe__ingredient__name__icontains=ingredient, diet=diet, cuisine=cuisine,
-                                           time=time, time_unit=time_unit)
+        recipe_queue = recipe_queue.filter(recipe__ingredient__name__icontains=ingredient, diet__icontains=diet, cuisine__icontains=cuisine, time=time, time_unit__icontains=time_unit)
         recipe_queue = recipe_queue.annotate(num_likes=Count('liked')).order_by('-num_likes')
 
         return recipe_queue
@@ -102,7 +101,7 @@ class SearchByCreator(ListAPIView):
 
         recipe_queue = Recipe.objects.all()
 
-        recipe_queue = recipe_queue.filter(user__username__icontains=creator, diet=diet, cuisine=cuisine, time=time, time_unit=time_unit)
+        recipe_queue = recipe_queue.filter(user__username__icontains=creator, diet__icontains=diet, cuisine__icontains=cuisine, time=time, time_unit__icontains=time_unit)
         recipe_queue = recipe_queue.annotate(num_likes=Count('liked')).order_by('-num_likes')
 
         return recipe_queue
