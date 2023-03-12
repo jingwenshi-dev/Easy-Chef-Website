@@ -79,7 +79,7 @@ class IngredientAutocomplete(ListAPIView):
 
     def get_queryset(self):
         name = self.request.query_params.get('ingredient')
-        return Ingredient.objects.filter(name__startswith=name)
+        return Ingredient.objects.filter(name__istartswith=name)
 
 
 class DisplayShoppingList():
