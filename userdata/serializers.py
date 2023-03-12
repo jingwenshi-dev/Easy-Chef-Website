@@ -88,7 +88,7 @@ class LikedRecipeSerializer(serializers.ModelSerializer):
         return liked_recipe
 
 
-class FavoritedRecipeSerializer(serializers.ModelSerializer):
+class FavouritedRecipeSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
     user = UserSerializer(read_only=True)
     recipe = RecipeSerializer(read_only=True)
@@ -106,9 +106,9 @@ class FavoritedRecipeSerializer(serializers.ModelSerializer):
         if FavoritedRecipe.objects.filter(user=current_user, recipe=recipe).exists():
             raise serializers.ValidationError({"detail": "The current user has already favorited this recipe."})
 
-        favorited_recipe = FavoritedRecipe.objects.create(user=current_user, recipe=recipe)
+        favourite_recipe = FavoritedRecipe.objects.create(user=current_user, recipe=recipe)
 
-        return favorited_recipe
+        return favourite_recipe
 
 
 class BrowsedRecipeSerializer(serializers.ModelSerializer):
