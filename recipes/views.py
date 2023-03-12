@@ -3,10 +3,8 @@ from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.exceptions import NotFound
-from recipes.serializers import *
 from recipes.permissions import *
-from userdata.models import Comment
-from userdata.serializers import CommentSerializer
+from userdata.serializers import *
 
 """
 API Class Naming Convention:
