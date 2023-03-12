@@ -33,7 +33,7 @@ class LogOutView(APIView):
         return Response(status=status.HTTP_200_OK)
 
 
-class EditProfileView(RetrieveUpdateAPIView):
+class RUProfileView(RetrieveUpdateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = UserSerializer
 
