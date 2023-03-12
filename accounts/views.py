@@ -10,8 +10,6 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 
 
-
-
 # Create your views here.
 class SignUpView(CreateAPIView):
     queryset = User.objects.all()  # Declare the set of objects to operate on
@@ -38,7 +36,14 @@ class RUProfileView(RetrieveUpdateAPIView):
     serializer_class = UserSerializer
 
     def get_object(self):
+<<<<<<< HEAD
         return self.request.user
     
+=======
+        uid = self.kwargs.get("uid", "")
+        user = get_object_or_404(User, pk=uid)
+        return user
+
+>>>>>>> 1aea35d3e817800e714ffa6d06da0bca19518738
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)

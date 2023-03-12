@@ -1,6 +1,7 @@
 from userdata.models import *
 from recipes.serializers import *
-from accounts.serializers import *
+from accounts.serializers import UserSerializer
+from recipes.serializers import RecipeSerializer
 
 
 class RatingSerializer(serializers.ModelSerializer):
@@ -42,9 +43,10 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ['id', 'user', 'recipe', 'message']
+        fields = ['id', 'user', 'recipe', 'message', 'file']
         extra_kwargs = {
-            'message': {'required': True}
+            'message': {'required': True},
+            'file': {'required': False}
         }
 
     def create(self, validated_data):
@@ -53,13 +55,15 @@ class CommentSerializer(serializers.ModelSerializer):
         current_user = self.context['request'].user
         recipe = get_object_or_404(Recipe, pk=rid)
         message = validated_data['message']
+        file = validated_data['file']
 
-        comment = Comment.objects.create(user=current_user, recipe=recipe, message=message)
+        comment = Comment.objects.create(user=current_user, recipe=recipe, message=message, file=file)
 
         return comment
 
     def update(self, instance, validated_data):
         instance.message = validated_data['message']
+        instance.file = validated_data['file']
         instance.save()
         return instance
 
@@ -85,8 +89,9 @@ class LikedRecipeSerializer(serializers.ModelSerializer):
         liked_recipe = LikedRecipe.objects.create(user=current_user, recipe=recipe)
 
         return liked_recipe
-    
-class FavoritedRecipeSerializer(serializers.ModelSerializer):
+
+
+class FavouritedRecipeSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
     user = UserSerializer(read_only=True)
     recipe = RecipeSerializer(read_only=True)
@@ -104,9 +109,9 @@ class FavoritedRecipeSerializer(serializers.ModelSerializer):
         if FavoritedRecipe.objects.filter(user=current_user, recipe=recipe).exists():
             raise serializers.ValidationError({"detail": "The current user has already favorited this recipe."})
 
-        favorited_recipe = FavoritedRecipe.objects.create(user=current_user, recipe=recipe)
+        favourite_recipe = FavoritedRecipe.objects.create(user=current_user, recipe=recipe)
 
-        return favorited_recipe
+        return favourite_recipe
 
 
 class BrowsedRecipeSerializer(serializers.ModelSerializer):
@@ -148,8 +153,8 @@ class ShoppingListSerializer(serializers.ModelSerializer):
         recipe = get_object_or_404(Recipe, pk=rid)
 
         if ShoppingList.objects.filter(user=current_user, recipe=recipe).exists():
-            raise serializers.ValidationError({"detail": "The current user has already add this recipe to the shopping list."})\
-
+            raise serializers.ValidationError(
+                {"detail": "The current user has already add this recipe to the shopping list."})
         shopping_lst = ShoppingList.objects.create(user=current_user, recipe=recipe)
 
         return shopping_lst

@@ -15,6 +15,7 @@ class Comment(models.Model):
     user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name='commented', default=None)
     recipe = models.ForeignKey(to=Recipe, on_delete=models.CASCADE, related_name='commented', default=None)
     message = models.TextField(max_length=500)
+    file = models.FileField(upload_to='comment/', null=True, blank=True)
 
 
 class LikedRecipe(models.Model):

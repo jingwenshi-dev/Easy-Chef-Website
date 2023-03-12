@@ -17,7 +17,7 @@ from django.urls import path
 from recipes.views import *
 
 urlpatterns = [
-    path('user=<int:uid>/create-recipe/', CreateRecipeView.as_view()),
+    path('create-recipe/', CreateRecipeView.as_view()),
     path('recipe=<int:rid>/RUD-recipe/', RecipeEditView.as_view()),
 
     path('recipe=<int:rid>/create-step/', CreateStepView.as_view()),
