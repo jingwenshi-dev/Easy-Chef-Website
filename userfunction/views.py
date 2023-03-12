@@ -4,7 +4,6 @@ from recipes.serializers import *
 from django.db.models import Count
 from django.http import JsonResponse
 from rest_framework import status
-from ..userdata.models import Rating, Comment, LikedRecipe, BrowsedRecipe
 from itertools import chain
 
 
@@ -84,8 +83,16 @@ class SearchByCreator(ListAPIView):
     serializer_class = RecipeSerializer
 
     def get_queryset(self):
-        # TODO
-        pass
+        creator = self.kwargs.get('creator')
+        cuisine = self.kwargs.get('cuisine')
+        diet = self.kwargs.get('diet')
+        time = self.kwargs.get('time')
+
+        recipe_queue = Recipe.objects.all()
+
+        recipe_queue = recipe_queue.filter(user__username__icontains=creator, diet=diet, cuisine=cuisine, time=time)
+
+        return recipe_queue
 
 
 class IngredientAutocomplete(ListAPIView):
