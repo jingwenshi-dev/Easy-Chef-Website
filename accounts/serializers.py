@@ -40,5 +40,9 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
     def update(self, instance, validated_data):
-        # TODO
-        pass
+        instance.username = validated_data['username']
+        instance.email = validated_data['email']
+        instance.password = validated_data['password']
+        instance.password2 = validated_data['password2']
+        instance.save()
+        return instance

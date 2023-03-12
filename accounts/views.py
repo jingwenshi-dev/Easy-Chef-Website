@@ -7,6 +7,7 @@ from accounts.models import User
 from accounts.serializers import UserSerializer
 from rest_framework import status
 from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
 
 
 
@@ -37,5 +38,9 @@ class EditProfileView(RetrieveUpdateAPIView):
     serializer_class = UserSerializer
 
     def get_object(self):
-        # TODO
-        pass
+        uid = self.kwargs.get("uid", "")
+        user = get_object_or_404(User, pk=uid)
+        return user
+    
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
