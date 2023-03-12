@@ -5,6 +5,8 @@ from rest_framework.views import APIView
 from rest_framework.exceptions import NotFound
 from recipes.serializers import *
 from recipes.permissions import *
+from userdata.models import Comment
+from userdata.serializers import CommentSerializer
 
 """
 API Class Naming Convention:
@@ -86,11 +88,13 @@ class RecipeDetailView(APIView):
         recipe = get_object_or_404(Recipe, id=rid)
         step = Step.objects.filter(recipe=recipe)
         recipe_ingredient = RecipeIngredient.objects.filter(recipe=recipe)
+        comment = Comment.objects.filter(recipe=recipe)
 
         recipe_serializer = RecipeSerializer(recipe)
         step_serializer = StepSerializer(step, many=True)
         recipe_ingredient_serializer = RecipeIngredientSerializer(recipe_ingredient, many=True)
+        comment_serializer = CommentSerializer(comment, many=True)
 
         return JsonResponse(
             {"recipe": recipe_serializer.data, "step": step_serializer.data,
-             "recipe_ingredient": recipe_ingredient_serializer.data})
+             "recipe_ingredient": recipe_ingredient_serializer.data, "comment": comment_serializer.data})
