@@ -22,6 +22,9 @@ class RatingSerializer(serializers.ModelSerializer):
         recipe = get_object_or_404(Recipe, pk=rid)
         score = validated_data['score']
 
+        if Rating.objects.filter(user=current_user, recipe=recipe).exists():
+            raise serializers.ValidationError({"detail": "The current user has already rated this recipe."})
+
         rating = Rating.objects.create(user=current_user, recipe=recipe, score=score)
 
         return rating
@@ -76,6 +79,9 @@ class LikedRecipeSerializer(serializers.ModelSerializer):
         current_user = self.context['request'].user
         recipe = get_object_or_404(Recipe, pk=rid)
 
+        if LikedRecipe.objects.filter(user=current_user, recipe=recipe).exists():
+            raise serializers.ValidationError({"detail": "The current user has already liked this recipe."})
+
         liked_recipe = LikedRecipe.objects.create(user=current_user, recipe=recipe)
 
         return liked_recipe
@@ -96,6 +102,9 @@ class BrowsedRecipeSerializer(serializers.ModelSerializer):
         current_user = self.context['request'].user
         recipe = get_object_or_404(Recipe, pk=rid)
 
+        if BrowsedRecipe.objects.filter(user=current_user, recipe=recipe).exists():
+            raise serializers.ValidationError({"detail": "The current user has already browsed this recipe."})
+
         browsed_recipe = BrowsedRecipe.objects.create(user=current_user, recipe=recipe)
 
         return browsed_recipe
@@ -115,6 +124,9 @@ class ShoppingListSerializer(serializers.ModelSerializer):
 
         current_user = self.context['request'].user
         recipe = get_object_or_404(Recipe, pk=rid)
+
+        if ShoppingList.objects.filter(user=current_user, recipe=recipe).exists():
+            raise serializers.ValidationError({"detail": "The current user has already add this recipe to the shopping list."})\
 
         shopping_lst = ShoppingList.objects.create(user=current_user, recipe=recipe)
 

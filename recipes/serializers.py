@@ -87,7 +87,7 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
         unit = validated_data['unit']
 
         if RecipeIngredient.objects.filter(recipe=recipe, ingredient=ingredient).exists():
-            raise serializers.ValidationError({"detail": "Current combination of recipe and ingredient already exist ("
+            raise serializers.ValidationError({"detail": "The current combination of recipe and ingredient already exist ("
                                                          "Hint: Update or Destroy current object)."})
 
         recipe_ingredient, created = RecipeIngredient.objects.update_or_create(recipe=recipe, ingredient=ingredient,
