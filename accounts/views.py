@@ -5,6 +5,10 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
 from accounts.models import User
 from accounts.serializers import UserSerializer
+from rest_framework import status
+from rest_framework.response import Response
+
+
 
 
 # Create your views here.
@@ -25,4 +29,5 @@ class LogOutView(APIView):
         for token in tokens:
             t, _ = BlacklistedToken.objects.get_or_create(token=token)
 
-        return JsonResponse({"Logout": True})
+        return Response(status=status.HTTP_200_OK)
+
