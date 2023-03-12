@@ -1,11 +1,14 @@
+from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated
 from recipes.serializers import *
 from django.db.models import Count
 from django.http import JsonResponse
+from rest_framework.response import Response
 from rest_framework import status
 from itertools import chain
 from django.core import serializers
+from userdata.models import ShoppingList
 
 
 # Create your views here.
@@ -118,9 +121,34 @@ class IngredientAutocomplete(ListAPIView):
         return Ingredient.objects.filter(name__istartswith=name)
 
 
-class DisplayShoppingList():
+class DisplayShoppingList(APIView):
     """
     Return combined ingredients and corresponding combined amount with unit.
     """
-    # TODO
-    pass
+    def get(self, request):
+        user = request.user
+        shopping_lst = ShoppingList.objects.filter(user=user)
+        ingredient_lst = {}
+
+        recipe_ingredient_lst = []
+
+        for item in shopping_lst:
+            recipe = item.recipe
+            recipe_ingredients = RecipeIngredient.objects.filter(recipe=recipe)
+            for recipe_ingredient in recipe_ingredients:
+                recipe_ingredient_lst.append(recipe_ingredient)
+
+        for recipe_ingredient in recipe_ingredient_lst:
+            name = recipe_ingredient.ingredient.name
+            amount = recipe_ingredient.amount
+            unit = recipe_ingredient.unit
+
+            if name in ingredient_lst:
+                ingredient_lst[name]['amount'] += amount
+            else:
+                ingredient_lst[name] = {'amount': amount, 'unit': unit}
+
+        return Response(data=ingredient_lst, status=200)
+
+
+

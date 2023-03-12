@@ -9,13 +9,10 @@ class RecipeSerializer(serializers.ModelSerializer):
     likes = serializers.SerializerMethodField('get_likes', read_only=True)
     rating = serializers.SerializerMethodField('get_avg_rating', read_only=True)
 
-    # comment = CommentSerializer(many=True, read_only=True)
-
     class Meta:
         model = Recipe
         fields = ['id', 'title', 'description', 'picture', 'time', 'time_unit', 'cuisine', 'diet', 'likes', 'rating']
         extra_kwargs = {
-            'uid': {'required': True},
             'title': {'required': True, 'max_length': 100},
             'description': {'required': True, 'max_length': 500},
             'picture': {'required': True},
