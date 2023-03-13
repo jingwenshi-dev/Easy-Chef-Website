@@ -91,8 +91,11 @@ class RecipeDetailView(APIView):
         recipe_serializer = RecipeSerializer(recipe)
         step_serializer = StepSerializer(step, many=True)
         recipe_ingredient_serializer = RecipeIngredientSerializer(recipe_ingredient, many=True)
-        comment_serializer = CommentSerializer(comment, many=True)
-
+        if comment.exists():
+            comment_serializer = CommentSerializer(comment, many=True)
+            return JsonResponse(
+                {"recipe": recipe_serializer.data, "step": step_serializer.data,
+                 "recipe_ingredient": recipe_ingredient_serializer.data, "comment": comment_serializer.data})
         return JsonResponse(
             {"recipe": recipe_serializer.data, "step": step_serializer.data,
-             "recipe_ingredient": recipe_ingredient_serializer.data, "comment": comment_serializer.data})
+             "recipe_ingredient": recipe_ingredient_serializer.data, "comment": []})
