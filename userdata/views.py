@@ -85,7 +85,7 @@ class RDBrowsedRecipeView(RetrieveDestroyAPIView):
 
 class CreateFavoritedRecipeView(CreateAPIView):
     permission_classes = [IsAuthenticated]
-    serializer_class = LikedRecipeSerializer
+    serializer_class = FavoritedRecipeSerializer
 
 
 class RDFavoritedRecipeView(RetrieveDestroyAPIView):
@@ -93,7 +93,7 @@ class RDFavoritedRecipeView(RetrieveDestroyAPIView):
     A liked recipe can only be deleted
     """
     permission_classes = [IsAuthenticated, UserDataPermission]
-    serializer_class = FavouritedRecipeSerializer
+    serializer_class = FavoritedRecipeSerializer
 
     def get_object(self):
         frid = self.kwargs.get('lrid')

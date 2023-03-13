@@ -91,7 +91,7 @@ class LikedRecipeSerializer(serializers.ModelSerializer):
         return liked_recipe
 
 
-class FavouritedRecipeSerializer(serializers.ModelSerializer):
+class FavoritedRecipeSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
     user = UserSerializer(read_only=True)
     recipe = RecipeSerializer(read_only=True)
