@@ -27,7 +27,7 @@ urlpatterns = [
     path('liked-recipe=<int:lrid>/RD-liked-recipe/', RDLikedRecipeView.as_view()),
 
     path('recipe=<int:rid>/create-favorited-recipe/', CreateFavoritedRecipeView.as_view()),
-    path('liked-recipe=<int:frid>/RD-favorited-recipe/', RDFavoritedRecipeView.as_view()),
+    path('favorited-recipe=<int:frid>/RD-favorited-recipe/', RDFavoritedRecipeView.as_view()),
 
     path('recipe=<int:rid>/create-browsed-recipe/', CreateBrowsedRecipeView.as_view()),
     path('browsed-recipe=<int:brid>/RD-browsed-recipe/', RDBrowsedRecipeView.as_view()),

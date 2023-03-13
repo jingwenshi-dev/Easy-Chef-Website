@@ -1,0 +1,1734 @@
+{
+	"info": {
+		"_postman_id": "ef62aaf7-5b4c-48a2-a242-0a5d47c98aa0",
+		"name": "CSC309 Group 431",
+		"description": "The APIs are categorized by the apps in Django:\n\n- accounts\n- recipes\n- userdata\n- userfunction",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26002405"
+	},
+	"item": [
+		{
+			"name": "accounts",
+			"item": [
+				{
+					"name": "Sign Up",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "test",
+									"description": "Username must be unqiue",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "test@gmail.com",
+									"description": "Email must be unique",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "qwertyuiop32392",
+									"description": "Password must be at least 8 characters",
+									"type": "text"
+								},
+								{
+									"key": "password2",
+									"value": "qwertyuiop32392",
+									"description": "Password must be at least 8 characters",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/accounts/signup/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"accounts",
+								"signup",
+								""
+							]
+						},
+						"description": "Sign Up requires the user to enter a unique username and email with passwords of at least 8 characters.\n\nThe response will return a JSON object with filed username and email.\n\nNote:\n\n- Password will not be returned.\n- When signing up, users cannot add their phone and avatar.\n    \n\nExample Payload:\n\n``` python\npayload={'username': 'test',\n'email': 'test@gmail.com',\n'password': 'qwertyuiop32392',\n'password2': 'qwertyuiop32392'}\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Log In",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "qwertyuiop32392",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/accounts/login/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"accounts",
+								"login",
+								""
+							]
+						},
+						"description": "The response will return user's information except for password.\n\nExample Payload:\n\n``` python\npayload={'username': 'test',\n'password': 'qwertyuiop32392'}\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Log Out",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/accounts/logout/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"accounts",
+								"logout",
+								""
+							]
+						},
+						"description": "Log Out does not take any user inputs but it will ask the user to be logged in first in order to log out."
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "test",
+									"description": "Username must be unique",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "test@gmail.com",
+									"description": "Email must be unique",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "ehwrqjklhejklqw",
+									"description": "Password must be at least 8 characters long",
+									"type": "text"
+								},
+								{
+									"key": "password2",
+									"value": "ehwrqjklhejklqw",
+									"description": "Password must be at least 8 characters long",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "12345678",
+									"description": "This field is not required",
+									"type": "text"
+								},
+								{
+									"key": "avatar",
+									"description": "This field is not required",
+									"type": "file",
+									"src": "/Users/jingwenshi/Downloads/asl_data/test/A/01_A_1.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/accounts/profile/edit/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"accounts",
+								"profile",
+								"edit",
+								""
+							]
+						},
+						"description": "Edit Profile allows users to add phone numbers and avatars.\n\nNote: When signing up, users cannot add their phone and avatar.\n\nExample Payload:\n\n``` python\npayload={'username': 'test',\n'email': 'test@gmail.com',\n'password': 'ehwrqjklhejklqw',\n'password2': 'ehwrqjklhejklqw',\n'phone': '12345678'}\nfiles=[\n  ('avatar',('01_A_1.jpg',open('/Users/jingwenshi/Downloads/asl_data/test/A/01_A_1.jpg','rb'),'image/jpeg'))\n]\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Profile",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/accounts/profile/details/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"accounts",
+								"profile",
+								"details",
+								""
+							]
+						},
+						"description": "Returns a JSON response with all fileds of the current user (except for password)."
+					},
+					"response": []
+				}
+			],
+			"description": "Accounts APIs are responsible for login, signup, update user profiles."
+		},
+		{
+			"name": "recipes",
+			"item": [
+				{
+					"name": "Create Recipe",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "How to make Soup Bao",
+									"description": "This field is required",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "A delicious dish!",
+									"description": "This field is required",
+									"type": "text"
+								},
+								{
+									"key": "picture",
+									"description": "This field is required",
+									"type": "file",
+									"src": "/Users/jingwenshi/Desktop/Screenshot 2023-03-07 at 11.32.57 PM.png"
+								},
+								{
+									"key": "time",
+									"value": "2",
+									"description": "This field is required",
+									"type": "text"
+								},
+								{
+									"key": "time_unit",
+									"value": "hours",
+									"description": "This field is required",
+									"type": "text"
+								},
+								{
+									"key": "cuisine",
+									"value": "Chinese",
+									"description": "This field is required",
+									"type": "text"
+								},
+								{
+									"key": "diet",
+									"value": "Others",
+									"description": "This field is required",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/recipes/create-recipe/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"recipes",
+								"create-recipe",
+								""
+							]
+						},
+						"description": "Example Payload:\n\n``` python\npayload={'title': 'How to make Soup Bao',\n'description': 'A delicious dish!',\n'time': '2',\n'time_unit': 'hours',\n'cuisine': 'Chinese',\n'diet': 'Others'}\nfiles=[\n  ('picture',('01_A_1.jpg',open('/Users/jingwenshi/Downloads/asl_data/test/A/01_A_1.jpg','rb'),'image/jpeg'))\n]\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Recipe",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "How to make Soup Dumplings",
+									"description": "This field is required",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "This is a traditional chinese dish!",
+									"description": "This field is required",
+									"type": "text"
+								},
+								{
+									"key": "picture",
+									"description": "This field is required",
+									"type": "file",
+									"src": "/Users/jingwenshi/Desktop/Screenshot 2023-03-07 at 11.33.15 PM.png"
+								},
+								{
+									"key": "time",
+									"value": "3",
+									"description": "This field is required",
+									"type": "text"
+								},
+								{
+									"key": "time_unit",
+									"value": "hours",
+									"description": "This field is required",
+									"type": "text"
+								},
+								{
+									"key": "cuisine",
+									"value": "Chinese",
+									"description": "This field is required",
+									"type": "text"
+								},
+								{
+									"key": "diet",
+									"value": "Others",
+									"description": "This field is required",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/recipes/recipe=1/RUD-recipe/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"recipes",
+								"recipe=1",
+								"RUD-recipe",
+								""
+							]
+						},
+						"description": "A recipe id must be passed to the endpoint url after the equal sign.\n\nThe payload is the same as Create Recipe"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Recipe",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/recipes/recipe=1/RUD-recipe/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"recipes",
+								"recipe=1",
+								"RUD-recipe",
+								""
+							]
+						},
+						"description": "Delete a specific recipe from the current user.\n\nA recipe id must be passed to the endpoint url after the equal sign."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Ingredient",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Pork",
+									"description": "This field is required",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/recipes/recipe=1/create-ingredient/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"recipes",
+								"recipe=1",
+								"create-ingredient",
+								""
+							]
+						},
+						"description": "Note: Once an ingredient is created, it cannot be deleted. But a RecipeIngredient can be deleted from a user's recipe.\n\nExample Payload:\n\n``` python\npayload={'name': 'Pork'}\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Recipe Ingredient",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "amount",
+									"value": "500",
+									"description": "This field is required",
+									"type": "text"
+								},
+								{
+									"key": "unit",
+									"value": "grams",
+									"description": "This field is required",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/recipes/recipe=1&ingredient=1/create-recipe-ingredient/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"recipes",
+								"recipe=1&ingredient=1",
+								"create-recipe-ingredient",
+								""
+							]
+						},
+						"description": "A recipe id and ingredient id must be passed to the endpoint url after the equeal sign.\n\nNote: The name of the ingredient should be passed in as an id in the endpoint. For more details, please refer to the model descriptions.\n\nExample Payload:\n\n``` python\npayload={'amount': '500',\n'unit': 'grams'}\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Recipe Ingredient",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "amount",
+									"value": "400",
+									"description": "This field is required",
+									"type": "text"
+								},
+								{
+									"key": "unit",
+									"value": "grams",
+									"description": "This field is required",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/recipes/recipe=1&ingredient=1/RUD-recipe-ingredient/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"recipes",
+								"recipe=1&ingredient=1",
+								"RUD-recipe-ingredient",
+								""
+							]
+						},
+						"description": "A recipe id and ingredient id must be passed to the endpoint url after the equeal sign.\n\nThe payload is the same as Create Recipe Ingredient."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Recipe Ingredient",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/recipes/recipe=1&ingredient=1/RUD-recipe-ingredient/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"recipes",
+								"recipe=1&ingredient=1",
+								"RUD-recipe-ingredient",
+								""
+							]
+						},
+						"description": "A recipe id and ingredient id must be passed to the endpoint url after the equeal sign.\n\nDelete a RecipeIngrediet from the current user's specific recipe."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Step",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "number",
+									"value": "1",
+									"description": "This field is required",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Mix pork with soy sauce",
+									"description": "This field is required",
+									"type": "text"
+								},
+								{
+									"key": "picture",
+									"description": "This field is required",
+									"type": "file",
+									"src": "/Users/jingwenshi/Downloads/asl_data/test/A/02_A_1.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/recipes/recipe=1/create-step/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"recipes",
+								"recipe=1",
+								"create-step",
+								""
+							]
+						},
+						"description": "A recipe id must be passed to the endpoint url after the equeal sign.\n\nNote:\n\nThe number represents the step number and it is not unique. That is, a recipe can have multiple step 2. In the front end, the developer only simply displays the step in non-decreasing order and is the user's responsibility to organize their steps.\n\nExample Payload:\n\n``` python\npayload={'number': '1',\n'description': 'Mix pork with soy sauce'}\nfiles=[\n  ('picture',('02_A_1.jpg',open('/Users/jingwenshi/Downloads/asl_data/test/A/02_A_1.jpg','rb'),'image/jpeg'))\n]\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Step",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "number",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Mix pork with salt for 3 mins",
+									"type": "text"
+								},
+								{
+									"key": "picture",
+									"type": "file",
+									"src": "/Users/jingwenshi/Downloads/asl_data/test/A/02_A_3.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/recipes/recipe=1&step=1/RUD-step/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"recipes",
+								"recipe=1&step=1",
+								"RUD-step",
+								""
+							]
+						},
+						"description": "A recipe id and step id must be passed to the endpoint url after the equeal sign.\n\nThe payload is the same as Create Step."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Step",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/recipes/recipe=1&step=1/RUD-step/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"recipes",
+								"recipe=1&step=1",
+								"RUD-step",
+								""
+							]
+						},
+						"description": "A recipe id and step id must be passed to the endpoint url after the equeal sign."
+					},
+					"response": []
+				},
+				{
+					"name": "View/Get Recipe",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/recipes/recipe=1/details/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"recipes",
+								"recipe=1",
+								"details",
+								""
+							]
+						},
+						"description": "Returns a JOSN response with all fileds of a recipe. In addition, it also returns the number of likes and a list of comments.\n\nA recipe id must be passed to the endpoint url after the equeal sign."
+					},
+					"response": []
+				}
+			],
+			"description": "recipe APIs contains all recipe related methods:\n\n- Create, Update, Delete Recipe/RecipeIngredient/Step\n- Create Ingredient\n- Get Recipe\n    \n\nNote:\n\n- Ingredient and RecipeIngredient are two different models. Ingredient is a model that contains unique ingredient names. And Recipe Ingredient is a model with 2 FK pointed to Recipe and Ingredient and 2 attributes of amount and unit.\n- Step is a model contains a description of the current step and a FK pointed the Recipe model.\n- For more details, please refer to the Model descriptions."
+		},
+		{
+			"name": "userdata",
+			"item": [
+				{
+					"name": "Create Rating",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "score",
+									"value": "5",
+									"description": "This field is required",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/userdata/recipe=1/create-rating/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"userdata",
+								"recipe=1",
+								"create-rating",
+								""
+							]
+						},
+						"description": "When current user rated a recipe, the API will be called.\n\nA recipe id must be passed to the endpoint url after the equeal sign.\n\nExample Payload:\n\n``` python\npayload={'score': '5'}\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Rating",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "score",
+									"value": "4",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/userdata/rating=1/RU-rating/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"userdata",
+								"rating=1",
+								"RU-rating",
+								""
+							]
+						},
+						"description": "A recipe id must be passed to the endpoint url after the equeal sign.\n\nThe payload is the same as Create Rating."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Comment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "message",
+									"value": "This recipe is pretty good!",
+									"description": "This field is required",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"description": "This field is required",
+									"type": "file",
+									"src": "/Users/jingwenshi/Downloads/asl_data/test/A/01_A_1.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/userdata/recipe=1/create-comment/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"userdata",
+								"recipe=1",
+								"create-comment",
+								""
+							]
+						},
+						"description": "When the current posted a comment to a recipe, this API will be called.\n\nA recipe id must be passed to the endpoint url after the equeal sign.\n\nExample Payload:\n\n``` python\npayload={'message': 'This recipe is pretty good!'}\nfiles=[\n  ('file',('01_A_1.jpg',open('/Users/jingwenshi/Downloads/asl_data/test/A/01_A_1.jpg','rb'),'image/jpeg'))\n]\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Comment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "message",
+									"value": "This recipe is good, but each step could be more clear.",
+									"description": "This field is required",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"description": "This field is required",
+									"type": "file",
+									"src": "/Users/jingwenshi/Downloads/asl_data/test/A/03_A_2.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/userdata/recipe=1&comment=1/RUD-comment/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"userdata",
+								"recipe=1&comment=1",
+								"RUD-comment",
+								""
+							]
+						},
+						"description": "A recipe id and comment id must be passed to the endpoint url after the equeal sign.\n\nThe payload is the same as Creat Comment."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Comment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/userdata/recipe=1&comment=1/RUD-comment/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"userdata",
+								"recipe=1&comment=1",
+								"RUD-comment",
+								""
+							]
+						},
+						"description": "Delete a comment based on its comment id.\n\nA recipe id and comment id must be passed to the endpoint url after the equeal sign."
+					},
+					"response": []
+				},
+				{
+					"name": "Like Recipe",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/userdata/recipe=1/create-liked-recipe/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"userdata",
+								"recipe=1",
+								"create-liked-recipe",
+								""
+							]
+						},
+						"description": "Like Recipe does not have any payload. The endpoint will take the recipe id and the currently logged-in user to record this action to the model.\n\nA recipe id must be passed to the endpoint url after the equeal sign.\n\nExample Payload: None"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Like Recipe",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/userdata/liked-recipe=1/RD-liked-recipe/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"userdata",
+								"liked-recipe=1",
+								"RD-liked-recipe",
+								""
+							]
+						},
+						"description": "Undo the action of like a recipe.\n\nA LikedRecipe id must be passed to the endpoint url after the equeal sign."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Browsed Recipe",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/userdata/recipe=1/create-browsed-recipe/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"userdata",
+								"recipe=1",
+								"create-browsed-recipe",
+								""
+							]
+						},
+						"description": "Create Browsed Recipe does not have any payload. The endpoint will take the recipe id and the currently logged-in user to record this action to the model.\n\nA recipe id must be passed to the endpoint url after the equeal sign.\n\nExample Payload: None"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Browsed Recipe",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/userdata/browsed-recipe=1/RD-browsed-recipe/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"userdata",
+								"browsed-recipe=1",
+								"RD-browsed-recipe",
+								""
+							]
+						},
+						"description": "Undo the action of browsing a recipe (delete browsing history).\n\nA BrowsedRecipe id must be passed to the endpoint url after the equeal sign."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Shopping Lst",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/userdata/recipe=1/create-shopping-lst/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"userdata",
+								"recipe=1",
+								"create-shopping-lst",
+								""
+							]
+						},
+						"description": "Create Shopping Lst does not have any payload. The endpoint will take the recipe id and the currently logged-in user to record this action to the model.\n\nA recipe id must be passed to the endpoint url after the equeal sign.\n\n**Note**: ShoppingList model only takes recipe id and user id as the attributes/FK. If a user want to view all the ingredients added to the shopping list, please refer to Get Shopping List\n\nExample Payload: None"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Shopping Lst",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/userdata/shopping-lst=1/RD-shopping-lst/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"userdata",
+								"shopping-lst=1",
+								"RD-shopping-lst",
+								""
+							]
+						},
+						"description": "Delete a recipe from shopping list.\n\nA shopping list id must be passed to the endpoint url after the equeal sign."
+					},
+					"response": []
+				},
+				{
+					"name": "Favorite Recipe",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/userdata/recipe=1/create-favorited-recipe/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"userdata",
+								"recipe=1",
+								"create-favorited-recipe",
+								""
+							]
+						},
+						"description": "Favourite Recipe does not have any payload. The endpoint will take the recipe id and the currently logged-in user to record this action to the model.\n\nA recipe id must be passed to the endpoint url after the equeal sign.\n\nExample Payload: None"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Favorite Recipe",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/userdata/favorited-recipe=1/RD-favorited-recipe/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"userdata",
+								"favorited-recipe=1",
+								"RD-favorited-recipe",
+								""
+							]
+						},
+						"description": "Remove a favourited recipe from the current user,\n\nA favourited recipe id must be passed to the endpoint url after the equeal sign."
+					},
+					"response": []
+				}
+			],
+			"description": "userdata APIs contains all method to manipulate and modify user's data.\n\nNote:\n\nFor all the models in userdata (Rating, Comment, LikedRecipe, BrowsedRecipe, FavouritedRecipe, Shopping) all have two FK pointed to the current user and a specific recipe. In addition, Rating has a score attribute and Comment has a message attribute.\n\nHence, you may need to pass in the id of the above models' instances to the endpoint."
+		},
+		{
+			"name": "User Function",
+			"item": [
+				{
+					"name": "Ingredient Autocomplete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/userfunction/autocomplete/?ingredient=Po",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"userfunction",
+								"autocomplete",
+								""
+							],
+							"query": [
+								{
+									"key": "ingredient",
+									"value": "Po"
+								}
+							]
+						},
+						"description": "Return a list of ingredient names.\n\nThis API is case-insensitive and return records based on the starting characters of a particular field value."
+					},
+					"response": []
+				},
+				{
+					"name": "Popular Recipes",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/userfunction/popular-recipes/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"userfunction",
+								"popular-recipes",
+								""
+							]
+						},
+						"description": "Return a list of recipes based on the number of likes in a non-increasing order."
+					},
+					"response": []
+				},
+				{
+					"name": "My Recipe",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/userfunction/my-recipe/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"userfunction",
+								"my-recipe",
+								""
+							]
+						},
+						"description": "Return three list of recipes of current logged in user:\n\n- created\n- favorited\n- interacted (i.e. create, like, rate, or comment)"
+					},
+					"response": []
+				},
+				{
+					"name": "Search by Name",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/userfunction/search/name/?name=Soup&cuisine=Chinese&diet=Others&time=3&unit=hours",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"userfunction",
+								"search",
+								"name",
+								""
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Soup"
+								},
+								{
+									"key": "cuisine",
+									"value": "Chinese"
+								},
+								{
+									"key": "diet",
+									"value": "Others"
+								},
+								{
+									"key": "time",
+									"value": "3"
+								},
+								{
+									"key": "unit",
+									"value": "hours"
+								}
+							]
+						},
+						"description": "Return a list of recipes whose title contains a given input string, then filter by cuisine, diet, and time.\n\nRecipes returned in the order of popularity, please refer to Popular Recipes API."
+					},
+					"response": []
+				},
+				{
+					"name": "Search by Creator",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/userfunction/search/creator/?creator=test&cuisine=Chinese&diet=Others&time=3&unit=hours",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"userfunction",
+								"search",
+								"creator",
+								""
+							],
+							"query": [
+								{
+									"key": "creator",
+									"value": "test"
+								},
+								{
+									"key": "cuisine",
+									"value": "Chinese"
+								},
+								{
+									"key": "diet",
+									"value": "Others"
+								},
+								{
+									"key": "time",
+									"value": "3"
+								},
+								{
+									"key": "unit",
+									"value": "hours"
+								}
+							]
+						},
+						"description": "Return a list of recipes whose creator's username contains a given input string, then filter by cuisine, diet, and time.\n\nRecipes returned in the order of popularity, please refer to Popular Recipes API."
+					},
+					"response": []
+				},
+				{
+					"name": "Search by Ingredient",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/userfunction/search/ingredient/?ingredient=Pork&cuisine=Chinese&diet=Others&time=3&unit=hours",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"userfunction",
+								"search",
+								"ingredient",
+								""
+							],
+							"query": [
+								{
+									"key": "ingredient",
+									"value": "Pork"
+								},
+								{
+									"key": "cuisine",
+									"value": "Chinese"
+								},
+								{
+									"key": "diet",
+									"value": "Others"
+								},
+								{
+									"key": "time",
+									"value": "3"
+								},
+								{
+									"key": "unit",
+									"value": "hours"
+								}
+							]
+						},
+						"description": "Return a list of recipes whose ingredient's name contains a given input string, then filter by cuisine, diet, and time.\n\nRecipes returned in the order of popularity, please refer to Popular Recipes API."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Shopping List",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/userfunction/shopping-list/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"userfunction",
+								"shopping-list",
+								""
+							]
+						},
+						"description": "Return a list of ingredients and a total amount with unit."
+					},
+					"response": []
+				}
+			],
+			"description": "userfunction provides a series of basic functionalities for a website.\n\n**Note:**\n\nAll requests are GET and all data input will be sent as request parameters.The data can be access through request_parameters instead of self.context or self.kwargs"
+		}
+	]
+}
