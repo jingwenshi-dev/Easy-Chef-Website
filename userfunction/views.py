@@ -1,22 +1,12 @@
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.pagination import PageNumberPagination
+from .pagination import *
 from recipes.serializers import *
 from django.db.models import Count
-<<<<<<< HEAD
-=======
-from django.http import JsonResponse
-from rest_framework.response import Response
->>>>>>> 1aea35d3e817800e714ffa6d06da0bca19518738
 from rest_framework import status
 from rest_framework.response import Response
-from itertools import chain
-<<<<<<< HEAD
-=======
-from django.core import serializers
 from userdata.models import ShoppingList
->>>>>>> 1aea35d3e817800e714ffa6d06da0bca19518738
 
 
 # Create your views here.
@@ -26,6 +16,7 @@ class PopularRecipes(ListAPIView):
     Note: You may want to use pagination.
     """
     serializer_class = RecipeSerializer
+    pagination_class = CustomPageNumberPagination
 
     def get_queryset(self):
         recipes = Recipe.objects.annotate(num_likes=Count('liked')).order_by('-num_likes')
@@ -39,22 +30,23 @@ class MyRecipe(ListAPIView):
     """
     permission_classes = [IsAuthenticated]
     serializer_class = RecipeSerializer
-    pagination_class = PageNumberPagination
+    pagination_class = CustomPageNumberPagination
 
 
     def list(self, request):
         user = request.user
-        created_query = user.creator.all()
-        created = [RecipeSerializer(recipe).data for recipe in created_query]
-        rated_query = user.rated.all()
-        rated = [RecipeSerializer(rate.recipe).data for rate in rated_query]
+        created_query = self.paginate_queryset(user.creator.all())
+        created = [self.get_serializer(recipe).data for recipe in created_query]
+        rated_query = self.paginate_queryset(user.rated.all())
+        rated = [self.get_serializer(rate.recipe).data for rate in rated_query]
         commented_query = user.commented.all()
-        commented = [RecipeSerializer(comment.recipe).data for comment in commented_query]
+        commented = [self.get_serializer(comment.recipe).data for comment in commented_query]
         liked_query = user.liked.all()
-        liked = [RecipeSerializer(like.recipe).data for like in liked_query]
-        favorited = user.favorited.all().values_list('recipe')
+        liked = [self.get_serializer(like.recipe).data for like in liked_query]
+        favorited_query = self.paginate_queryset(user.favorited.all())
+        favorited = [self.get_serializer(favorite.recipe).data for favorite in favorited_query]
         interacted = created + rated + commented + liked
-        interacted_distinct = [dict(t) for t in {tuple(d.items()) for d in interacted}]
+        interacted_distinct = self.paginate_queryset([dict(t) for t in {tuple(d.items()) for d in interacted}])
         return Response({'created': created, 'favorited': favorited, 'interacted': interacted_distinct},
                             status=status.HTTP_200_OK)
 
@@ -67,6 +59,7 @@ class SearchByName(ListAPIView):
     Note: You may want to use pagination.
     """
     serializer_class = RecipeSerializer
+    pagination_class = CustomPageNumberPagination
 
     def get_queryset(self):
         name = self.request.query_params.get('name')
@@ -87,6 +80,7 @@ class SearchByIngredient(ListAPIView):
     Note: You may want to use pagination.
     """
     serializer_class = RecipeSerializer
+    pagination_class = CustomPageNumberPagination
 
     def get_queryset(self):
         ingredient = self.request.query_params.get('ingredient')
@@ -110,6 +104,7 @@ class SearchByCreator(ListAPIView):
     Note: You may want to use pagination.
     """
     serializer_class = RecipeSerializer
+    pagination_class = CustomPageNumberPagination
 
     def get_queryset(self):
         creator = self.request.query_params.get('creator')
