@@ -55,15 +55,18 @@ class CommentSerializer(serializers.ModelSerializer):
         current_user = self.context['request'].user
         recipe = get_object_or_404(Recipe, pk=rid)
         message = validated_data['message']
-        file = validated_data['file']
+        file = validated_data.get('file')
 
-        comment = Comment.objects.create(user=current_user, recipe=recipe, message=message, file=file)
+        if file:
+            comment = Comment.objects.create(user=current_user, recipe=recipe, message=message, file=file)
+        else:
+            comment = Comment.objects.create(user=current_user, recipe=recipe, message=message)
 
         return comment
 
     def update(self, instance, validated_data):
         instance.message = validated_data['message']
-        instance.file = validated_data['file']
+        instance.file = validated_data.get('file')
         instance.save()
         return instance
 
