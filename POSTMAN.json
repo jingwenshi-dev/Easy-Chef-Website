@@ -81,11 +81,13 @@
 								{
 									"key": "username",
 									"value": "test",
+									"description": "This field is required",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "qwertyuiop32392",
+									"description": "This field is required",
 									"type": "text"
 								}
 							]
@@ -707,7 +709,7 @@
 									"key": "picture",
 									"description": "This field is required",
 									"type": "file",
-									"src": "/Users/jingwenshi/Downloads/asl_data/test/A/02_A_1.jpg"
+									"src": "/Users/jingwenshi/Desktop/Screenshot 2023-03-07 at 11.32.57 PM.png"
 								}
 							]
 						},
@@ -1468,7 +1470,8 @@
 							"query": [
 								{
 									"key": "ingredient",
-									"value": "Po"
+									"value": "Po",
+									"description": "This field is optional"
 								}
 							]
 						},
@@ -1520,7 +1523,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:8000/userfunction/my-recipe/",
+							"raw": "http://127.0.0.1:8000/userfunction/my-recipe/?page=1&count=2",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1533,6 +1536,16 @@
 								"userfunction",
 								"my-recipe",
 								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "count",
+									"value": "2"
+								}
 							]
 						},
 						"description": "Return three list of recipes of current logged in user:\n\n- created\n- favorited\n- interacted (i.e. create, like, rate, or comment)"
@@ -1548,7 +1561,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:8000/userfunction/search/name/?name=Soup&cuisine=Chinese&diet=Others&time=3&unit=hours",
+							"raw": "http://127.0.0.1:8000/userfunction/search/name/?name=Soup&cuisine=Chinese&diet=Others&time=2&unit=hours&count=2&page=1",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1566,23 +1579,36 @@
 							"query": [
 								{
 									"key": "name",
-									"value": "Soup"
+									"value": "Soup",
+									"description": "This field is optional"
 								},
 								{
 									"key": "cuisine",
-									"value": "Chinese"
+									"value": "Chinese",
+									"description": "This field is optional"
 								},
 								{
 									"key": "diet",
-									"value": "Others"
+									"value": "Others",
+									"description": "This field is optional"
 								},
 								{
 									"key": "time",
-									"value": "3"
+									"value": "2",
+									"description": "This field is optional"
 								},
 								{
 									"key": "unit",
-									"value": "hours"
+									"value": "hours",
+									"description": "This field is optional"
+								},
+								{
+									"key": "count",
+									"value": "2"
+								},
+								{
+									"key": "page",
+									"value": "1"
 								}
 							]
 						},
@@ -1599,7 +1625,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:8000/userfunction/search/creator/?creator=test&cuisine=Chinese&diet=Others&time=3&unit=hours",
+							"raw": "http://127.0.0.1:8000/userfunction/search/creator/?creator=test&cuisine=Chinese&diet=Others&time=2&unit=hours&page=1&count=2",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1617,23 +1643,36 @@
 							"query": [
 								{
 									"key": "creator",
-									"value": "test"
+									"value": "test",
+									"description": "This field is optional"
 								},
 								{
 									"key": "cuisine",
-									"value": "Chinese"
+									"value": "Chinese",
+									"description": "This field is optional"
 								},
 								{
 									"key": "diet",
-									"value": "Others"
+									"value": "Others",
+									"description": "This field is optional"
 								},
 								{
 									"key": "time",
-									"value": "3"
+									"value": "2",
+									"description": "This field is optional"
 								},
 								{
 									"key": "unit",
-									"value": "hours"
+									"value": "hours",
+									"description": "This field is optional"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "count",
+									"value": "2"
 								}
 							]
 						},
@@ -1650,7 +1689,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:8000/userfunction/search/ingredient/?ingredient=Pork&cuisine=Chinese&diet=Others&time=3&unit=hours",
+							"raw": "http://127.0.0.1:8000/userfunction/search/ingredient/?ingredient=Pork&cuisine=Chinese&diet=Others&time=2&unit=hours&page=1&count=2",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1668,23 +1707,36 @@
 							"query": [
 								{
 									"key": "ingredient",
-									"value": "Pork"
+									"value": "Pork",
+									"description": "This field is optional"
 								},
 								{
 									"key": "cuisine",
-									"value": "Chinese"
+									"value": "Chinese",
+									"description": "This field is optional"
 								},
 								{
 									"key": "diet",
-									"value": "Others"
+									"value": "Others",
+									"description": "This field is optional"
 								},
 								{
 									"key": "time",
-									"value": "3"
+									"value": "2",
+									"description": "This field is optional"
 								},
 								{
 									"key": "unit",
-									"value": "hours"
+									"value": "hours",
+									"description": "This field is optional"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "count",
+									"value": "2"
 								}
 							]
 						},
@@ -1728,7 +1780,7 @@
 					"response": []
 				}
 			],
-			"description": "userfunction provides a series of basic functionalities for a website.\n\n**Note:**\n\nAll requests are GET and all data input will be sent as request parameters.The data can be access through request_parameters instead of self.context or self.kwargs"
+			"description": "userfunction provides a series of basic functionalities for a website.\n\n**Note:**\n\n- All requests are GET and all data input will be sent as request parameters. Therefore, there is no payload for most of the APIs in this section.\n- The data can be access through request_parameters instead of self.context or self.kwargs\n    \n\n**Pagination:**\n\n- The developer can add page and count parameters for pagination in Searchs, My Recipe and Popular Recipes."
 		}
 	]
 }
