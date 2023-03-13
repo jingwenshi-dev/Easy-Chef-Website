@@ -4,7 +4,7 @@ from accounts.models import User
 
 # Create your models here.
 class Recipe(models.Model):
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name='created_recipe', default=None,
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name='creator', default=None,
                              blank=False)
     title = models.CharField(max_length=100, blank=False)
     description = models.TextField(max_length=500, blank=False)
