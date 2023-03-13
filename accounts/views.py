@@ -36,14 +36,9 @@ class RUProfileView(RetrieveUpdateAPIView):
     serializer_class = UserSerializer
 
     def get_object(self):
-<<<<<<< HEAD
-        return self.request.user
-    
-=======
         user = self.request.user
         return user
 
->>>>>>> d488348e8c986106a55d9f0bd0a0c05fceeebf36
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
 
