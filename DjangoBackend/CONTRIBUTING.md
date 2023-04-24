@@ -1,0 +1,3 @@
+- Jingwen (Steven) Shi: CRUD for Login, Signup, Recipe, Step, Ingredient, Comment, Likes, Browsed Recipe
+- Xuankui Zhu: Edit Profile
+- Ziyangn Qu: 

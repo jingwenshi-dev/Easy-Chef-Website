@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap');
+
+body{
+    font-family: 'Open Sans', sans-serif;
+    width:100%;
+    height: 100%;
+    padding-top: 6em;
+}
+
+.form-group{
+    margin-left: 30em;
+    margin-right: 30em;
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+.button-group{
+    display: flex;
+    margin-left: 30em;
+    margin-right: 30em;
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+.button{
+    height: 3em;
+    margin: auto;
+    font-size: 1.1rem;
+    width: 50%;
+    border: none;
+    outline: none;
+    color: white;
+    background-color: coral;
+    border-radius: 5px;
+    font-weight: 700;
+}
+
+#submit{
+    margin-right: 1em;
+}
+
+button:hover{
+    background-color: white;
+    border: 2px solid black;
+    color: black;
+}

@@ -1,0 +1,21 @@
+.main-container {
+    padding-top: 7em;
+}
+.search, .pagetraverse {
+    margin-left: 10em;
+    margin-right: 10em;
+    padding-left: 70px;
+    padding-right: 70px;
+}
+
+.recipes-container {
+    margin-left: 10em;
+    margin-right: 10em;
+    padding: 40px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+.recipe {
+    padding: 2em;
+    width: 25%;
+}
