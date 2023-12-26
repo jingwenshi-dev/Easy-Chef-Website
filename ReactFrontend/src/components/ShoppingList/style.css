@@ -1,0 +1,25 @@
+.main-container {
+    padding-top: 7em;
+}
+.block {
+    margin-left: 10em;
+    margin-right: 10em;
+    padding: 40px;
+}
+table {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 12px;
+}
+table, tr, th, td {
+    border: solid;
+    border-collapse: collapse;
+}
+
+th, td {
+    text-align: center;
+}
+
+th {
+    background-color: orange;
+}
